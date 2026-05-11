@@ -10,15 +10,21 @@
  * paused track they can scroll horizontally if needed.
  */
 
+/**
+ * The marquee doubles as the page's recurring coordinate ticker — each yard
+ * label carries its real lat/lon so the editorial coord motif from the hero
+ * (`N 30.23° / W 93.24°`) and the locations popover continues running across
+ * the page instead of appearing once and disappearing.
+ */
 const ITEMS: { label: string; tone?: "primary" | "accent" }[] = [
   { label: "Ready Mix" },
   { label: "Precast" },
   { label: "Aggregates" },
   { label: "South Coast Materials" },
-  { label: "Westlake · LA", tone: "accent" },
-  { label: "Lake Charles · LA", tone: "accent" },
-  { label: "Sulphur · LA", tone: "accent" },
-  { label: "Ragley · LA", tone: "accent" },
+  { label: "Westlake · N 30.246° / W 93.243°", tone: "accent" },
+  { label: "Lake Charles · N 30.235° / W 93.210°", tone: "accent" },
+  { label: "Sulphur · N 30.236° / W 93.378°", tone: "accent" },
+  { label: "Ragley · N 30.502° / W 93.235°", tone: "accent" },
   { label: "Since 1939" },
   { label: "Calcasieu Parish" },
   { label: "ACI · PCI · DOTD" },

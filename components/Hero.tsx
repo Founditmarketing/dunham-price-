@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 
 import { MagneticButton } from "@/components/MagneticButton";
-import { HERO } from "@/lib/content";
+import { HERO, SITE } from "@/lib/content";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -182,6 +182,55 @@ export function Hero() {
             <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" />
           </Link>
         </motion.div>
+
+        {/* Proof scan-line.
+            The ranked-#1 fix from the design review: answer the bouncing
+            estimator's "can you do my job?" question inside the first
+            viewport. Reads as a spec ticker, not marketing copy.
+            Each item separated by a hairline rule that draws in on reveal. */}
+        <motion.ul
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.2, ease: EASE }}
+          aria-label="What we make and where we serve"
+          className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-primary/15 pt-5 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-primary/75 sm:gap-x-7 sm:text-[0.7rem]"
+        >
+          {HERO.proofLine.map((item, i) => (
+            <li key={item.label} className="flex items-center gap-5 sm:gap-7">
+              {i > 0 && (
+                <span
+                  aria-hidden="true"
+                  className="hidden h-3 w-px bg-primary/25 sm:block"
+                />
+              )}
+              <span className="inline-flex items-center gap-2">
+                <span
+                  aria-hidden="true"
+                  className="block size-1 shrink-0 bg-accent"
+                />
+                {item.label}
+              </span>
+            </li>
+          ))}
+          <li className="flex items-center gap-5 sm:gap-7 sm:ml-auto">
+            <span
+              aria-hidden="true"
+              className="hidden h-3 w-px bg-primary/25 sm:block"
+            />
+            <a
+              href={SITE.phoneTel}
+              className="group inline-flex items-center gap-2 text-accent transition hover:text-accent-hot"
+            >
+              <Phone aria-hidden className="size-3.5" />
+              <span className="tabular-nums tracking-[0.18em]">
+                {SITE.phone}
+              </span>
+              <span className="hidden text-primary/55 sm:inline">
+                Dispatch
+              </span>
+            </a>
+          </li>
+        </motion.ul>
       </div>
 
       {/* Editorial corner ornament — replaces the 2019-era vertical SCROLL.

@@ -31,7 +31,7 @@ export const NAV_LINKS: NavLinkItem[] = [
 ];
 
 export const HERO = {
-  eyebrow: "EST. 1939 — SOUTHWEST LOUISIANA",
+  eyebrow: "EST. 1939 · SOUTHWEST LOUISIANA",
   headlineLine1: "THERE'S HISTORY",
   headlineLine2: "IN THE MIX.",
   subhead:
@@ -42,6 +42,17 @@ export const HERO = {
   poster: "/hero-poster.svg",
   ctaPrimary: { label: "Request a Quote", href: "#quote" },
   ctaSecondary: { label: "Explore Capabilities", href: "#capabilities" },
+  /**
+   * Scan-line surfaced directly below the CTAs. Answers the bounce-prone
+   * estimator's "can you do my job?" question within the first viewport.
+   * Each item is short and mono so the row reads as a spec ticker, not copy.
+   */
+  proofLine: [
+    { label: "Ready-mix" },
+    { label: "Precast girders & piles" },
+    { label: "Aggregates · base · rip rap" },
+    { label: "Same-day dispatch · 4 yards" },
+  ],
 } as const;
 
 export const STATS: Stat[] = [
@@ -56,6 +67,13 @@ export const DIVISIONS: Division[] = [
     slug: "ready-mix",
     name: "Ready Mix Concrete",
     productLines: 7,
+    lines: [
+      "Standard mix",
+      "Lightweight",
+      "Flow fill",
+      "Specialty admixtures",
+      "Polypropylene & steel fibers",
+    ],
     href: "/capabilities#ready-mix",
     image:
       "https://dunhamprice.com/wp-content/uploads/2025/08/services-_0005_Concrete-Truck.jpg",
@@ -65,6 +83,13 @@ export const DIVISIONS: Division[] = [
     slug: "precast",
     name: "Precast",
     productLines: 5,
+    lines: [
+      "Bridge girders",
+      "Bridge & deck panels",
+      "Prestressed pile",
+      "Specialty precast",
+      "Bin blocks",
+    ],
     href: "/capabilities#precast",
     image:
       "https://dunhamprice.com/wp-content/uploads/2025/08/services-_0002_Precast.jpg",
@@ -74,6 +99,13 @@ export const DIVISIONS: Division[] = [
     slug: "aggregates",
     name: "Aggregates",
     productLines: 12,
+    lines: [
+      "Crushed limestone (#57, #67, #8)",
+      "610 base",
+      "Rip rap (#10 / #30 / #50)",
+      "Mason & fill sand",
+      "Pea gravel",
+    ],
     href: "/capabilities#aggregates",
     image:
       "https://dunhamprice.com/wp-content/uploads/2025/08/concrete-home.jpg",
@@ -83,6 +115,11 @@ export const DIVISIONS: Division[] = [
     slug: "south-coast",
     name: "South Coast Materials",
     productLines: 3,
+    lines: [
+      "Clean fill sand",
+      "Concrete sand",
+      "Asphalt sand",
+    ],
     href: "/capabilities#south-coast",
     image:
       "https://dunhamprice.com/wp-content/uploads/2025/08/services-_0006_Aggregates.jpg",
@@ -140,6 +177,13 @@ export const PROJECTS: Project[] = [
     name: "I-10 Calcasieu River Bridge",
     division: "Precast",
     scope: "Bridge girders & deck panels",
+    client: "Louisiana DOTD",
+    year: "2024",
+    metrics: [
+      { value: "840", unit: "LF", label: "Girders" },
+      { value: "12,000", unit: "yd³", label: "Concrete" },
+      { value: "18", unit: "MO", label: "Duration" },
+    ],
     // TODO: replace with real project imagery
     image:
       "https://dunhamprice.com/wp-content/uploads/2025/08/services-_0002_Precast.jpg",
@@ -150,6 +194,13 @@ export const PROJECTS: Project[] = [
     name: "Port of Lake Charles Expansion",
     division: "Ready Mix",
     scope: "12,000 yd³ structural pour",
+    client: "Lake Charles Harbor & Terminal District",
+    year: "2023",
+    metrics: [
+      { value: "12,000", unit: "yd³", label: "Delivered" },
+      { value: "36", unit: "HR", label: "Continuous" },
+      { value: "0", label: "Cold joints" },
+    ],
     image:
       "https://dunhamprice.com/wp-content/uploads/2025/08/services-_0005_Concrete-Truck.jpg",
     imageAlt: "Ready mix trucks queued for the Port of Lake Charles pour",
@@ -159,6 +210,13 @@ export const PROJECTS: Project[] = [
     name: "Cameron LNG Facility",
     division: "Aggregates",
     scope: "Base material & rip rap",
+    client: "Cameron LNG, LLC",
+    year: "2022",
+    metrics: [
+      { value: "180k", unit: "TON", label: "Aggregates" },
+      { value: "1.2", unit: "MI", label: "Shoreline" },
+      { value: "3", label: "Gradations" },
+    ],
     image:
       "https://dunhamprice.com/wp-content/uploads/2025/08/services-_0006_Aggregates.jpg",
     imageAlt: "Aggregate base material delivered to Cameron LNG",

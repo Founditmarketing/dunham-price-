@@ -13,7 +13,14 @@ export type DivisionSlug =
 export interface Division {
   slug: DivisionSlug;
   name: string;
+  /** Total number of product lines this division catalogs on /capabilities. */
   productLines: number;
+  /**
+   * Curated short list of headline products surfaced on the homepage card.
+   * Specifiers scan these to decide in seconds whether to drill in. Keep to
+   * 4–5 entries; the full catalog lives on /capabilities.
+   */
+  lines: string[];
   href: string;
   image: string;
   imageAlt: string;
@@ -34,6 +41,18 @@ export interface LocationItem {
   driveTime?: string;
 }
 
+/**
+ * Compact metric used on the homepage projects strip card.
+ * Pre-formatted display string keeps the rendering trivial; the canonical
+ * numeric form lives in `lib/projects.ts` for use on the detail pages.
+ */
+export interface ProjectMetricCompact {
+  value: string;
+  /** Optional unit (e.g. "yd³", "LF", "MO"). */
+  unit?: string;
+  label: string;
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -41,6 +60,16 @@ export interface Project {
   scope: string;
   image: string;
   imageAlt: string;
+  /** GC partner, owner, or contracting agency. Optional. */
+  client?: string;
+  /** Project completion year. Optional. */
+  year?: string;
+  /**
+   * Three highest-impact metrics for the homepage card. Keep to three so the
+   * card stays a card, not a spec sheet — the full metric grid lives on the
+   * project detail page.
+   */
+  metrics?: ProjectMetricCompact[];
 }
 
 export interface Stat {

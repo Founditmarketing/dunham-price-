@@ -48,7 +48,10 @@ export function ProjectCard({
         aria-label={`${project.name} — ${project.division} project`}
         className="flex h-full flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base"
       >
-        <div className="relative aspect-[3/4] w-full overflow-hidden">
+        <div
+          className="relative aspect-[3/4] w-full overflow-hidden"
+          data-parallax="0.12"
+        >
           <Image
             src={project.image}
             alt={project.imageAlt}
@@ -70,14 +73,60 @@ export function ProjectCard({
             P—{String(index + 1).padStart(2, "0")}
           </div>
         </div>
-        <div className="flex flex-1 flex-col gap-3 p-6 sm:p-7">
+        <div className="flex flex-1 flex-col gap-4 p-6 sm:p-7">
           <h3 className="font-display text-2xl font-bold uppercase leading-tight tracking-tight text-primary sm:text-3xl">
             {project.name}
           </h3>
           <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary/70">
             {project.scope}
           </p>
-          <span className="mt-auto inline-flex items-center gap-2 pt-4 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-accent transition-transform duration-500 group-hover:translate-x-1">
+
+          {/* Metric strip. The numbers ARE the portfolio for a 1939 concrete
+              company; specifiers scanning vendors decide in seconds whether
+              the work is the right scale. Three slots, tabular, no chrome. */}
+          {project.metrics && project.metrics.length > 0 && (
+            <dl
+              aria-label="Project metrics"
+              className="grid grid-cols-3 gap-2 border-t border-line/70 pt-4"
+            >
+              {project.metrics.map((m) => (
+                <div key={m.label} className="flex flex-col gap-0.5">
+                  <dt className="sr-only">{m.label}</dt>
+                  <dd className="flex items-baseline gap-1 font-display text-xl font-bold leading-none tracking-tight text-primary tabular-nums sm:text-2xl">
+                    {m.value}
+                    {m.unit && (
+                      <span className="font-mono text-[0.6rem] font-medium uppercase tracking-[0.18em] text-accent">
+                        {m.unit}
+                      </span>
+                    )}
+                  </dd>
+                  <span
+                    aria-hidden
+                    className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-muted"
+                  >
+                    {m.label}
+                  </span>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {/* Client + year footer. Optional, dim, mono. */}
+          {(project.client || project.year) && (
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">
+              {project.client && <span>{project.client}</span>}
+              {project.client && project.year && (
+                <span aria-hidden className="text-primary/25">
+                  /
+                </span>
+              )}
+              {project.year && (
+                <span className="text-primary/65">{project.year}</span>
+              )}
+            </p>
+          )}
+
+          <span className="mt-auto inline-flex items-center gap-2 pt-2 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-accent transition-transform duration-500 group-hover:translate-x-1">
             View case study
             <ArrowUpRight className="size-3.5" aria-hidden />
           </span>

@@ -44,7 +44,7 @@ function DivisionCard({ division, index }: { division: Division; index: number }
       <Link
         href={division.href}
         className="group relative block aspect-[4/5] w-full overflow-hidden bg-elevated focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base lg:aspect-[5/4]"
-        aria-label={`${division.name} — ${division.productLines} product lines`}
+        aria-label={`${division.name}, ${division.productLines} product lines: ${division.lines.join(", ")}`}
         data-parallax="0.18"
       >
         <Image
@@ -55,16 +55,17 @@ function DivisionCard({ division, index }: { division: Division; index: number }
           className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.09] group-focus-visible:scale-[1.09]"
         />
 
-        {/* Base gradient — keeps text always legible. */}
+        {/* Base gradient. Anchors text legibility; deepens on hover so the
+            revealed product list reads cleanly even over busy photography. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-base via-base/55 to-base/15 transition-opacity duration-700 group-hover:from-base group-hover:via-base/75 group-hover:to-base/35"
+          className="absolute inset-0 bg-gradient-to-t from-base via-base/65 to-base/20 transition-[background] duration-700 group-hover:from-base group-hover:via-base/85 group-focus-visible:from-base group-focus-visible:via-base/85"
         />
 
         {/* Yellow wash that warms the image on hover. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-accent/0 mix-blend-overlay transition-colors duration-700 group-hover:bg-accent/15"
+          className="pointer-events-none absolute inset-0 bg-accent/0 mix-blend-overlay transition-colors duration-700 group-hover:bg-accent/12 group-focus-visible:bg-accent/12"
         />
 
         <CornerBracket position="tl" />
@@ -72,8 +73,8 @@ function DivisionCard({ division, index }: { division: Division; index: number }
         <CornerBracket position="bl" />
         <CornerBracket position="br" />
 
-        {/* Index marker + product count, top */}
-        <div className="absolute inset-x-6 top-6 flex items-center justify-between font-mono text-[0.68rem] uppercase tracking-[0.22em] text-primary/75">
+        {/* Top row: index + line count. */}
+        <div className="absolute inset-x-6 top-6 flex items-center justify-between font-mono text-[0.68rem] uppercase tracking-[0.22em] text-primary/75 sm:inset-x-8 sm:top-8">
           <span>0{index + 1} / Capability</span>
           <span className="inline-flex items-center gap-2 text-accent">
             <span className="block size-1 bg-accent" />
@@ -81,18 +82,45 @@ function DivisionCard({ division, index }: { division: Division; index: number }
           </span>
         </div>
 
-        {/* Bottom content slot */}
-        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 p-6 sm:p-8">
+        {/* Bottom content slot.
+            Title is always visible. The product line list lives directly
+            beneath it: dimmed and tight on idle, brightened and looser on
+            hover/focus so a specifier's eye is rewarded for paying
+            attention. On touch devices (no hover), the list is always
+            legible by default; the brightening is purely additive on
+            pointer-capable devices. */}
+        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 sm:gap-5 sm:p-8">
           <h3 className="font-display text-[clamp(2rem,3.4vw,3.4rem)] font-black uppercase leading-[0.92] tracking-tight text-primary">
             {division.name}
           </h3>
 
-          {/* CTA bar — on hover the entire row lifts toward the user with
-              the arrow translating diagonally outward. Bigger than before
-              so it reads as the dominant affordance. */}
+          {/* Product lines, real names. Comma-separated mono so it reads
+              as a spec rail. Always visible (mobile + reduced-motion safe);
+              text color amplifies on hover/focus. */}
+          <ul
+            aria-label={`${division.name} product lines`}
+            className="-mx-1 flex flex-wrap gap-x-3 gap-y-1.5 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-primary/65 transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-primary/95 group-focus-visible:text-primary/95"
+          >
+            {division.lines.map((line, i) => (
+              <li
+                key={line}
+                className="inline-flex items-center gap-2 px-1"
+              >
+                {i > 0 && (
+                  <span
+                    aria-hidden
+                    className="block size-[3px] rounded-full bg-accent/60"
+                  />
+                )}
+                {line}
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA bar. */}
           <div className="flex items-end justify-between gap-4 border-t border-primary/15 pt-4">
-            <span className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-primary/65">
-              Specs &amp; product lines
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-muted">
+              Open full catalog
             </span>
             <span className="inline-flex items-center gap-3 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-accent transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:text-accent-hot">
               View capability
