@@ -3,14 +3,13 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Check, Download } from "lucide-react";
 
+import { EASE } from "@/lib/motion";
 import {
   DIVISION_LABELS,
   DIVISION_LEGAL_NAMES,
   DIVISION_NUMBERS,
   type Project,
 } from "@/lib/projects";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface ProjectScopeProps {
   project: Project;

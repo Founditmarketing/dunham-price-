@@ -6,9 +6,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 import { DIVISIONS } from "@/lib/content";
+import { EASE } from "@/lib/motion";
 import type { Division } from "@/types";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 function CornerBracket({
   position,

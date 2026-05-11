@@ -3,8 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { CHAIRMAN } from "@/lib/content";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 export function ChairmanQuote() {
   const prefersReducedMotion = useReducedMotion();
@@ -36,10 +35,19 @@ export function ChairmanQuote() {
         </div>
 
         <div className="lg:col-span-9">
+          {/* Reveal threshold lowered (was 0.4) so the quote never stays
+              at opacity:0 on a brisk mobile scroll. The quote is the
+              homepage's most-cited copy; failure mode here is silent and
+              expensive. amount: 0.15 + a -10% bottom rootMargin makes the
+              IO fire as soon as the block is even partially in view. */}
           <motion.blockquote
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
+            viewport={{
+              once: true,
+              amount: 0.15,
+              margin: "0px 0px -10% 0px",
+            }}
             transition={{ duration: 1.1, ease: EASE }}
             id="chairman-heading"
             className="font-display text-[clamp(1.5rem,3.6vw,3.4rem)] font-bold italic leading-[1.18] tracking-tight text-primary sm:leading-[1.1]"
@@ -59,7 +67,11 @@ export function ChairmanQuote() {
           <motion.p
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
+            viewport={{
+              once: true,
+              amount: 0.2,
+              margin: "0px 0px -10% 0px",
+            }}
             transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
             className="mt-12 border-t border-line pt-8 font-mono text-[0.72rem] uppercase tracking-[0.22em] text-muted"
           >

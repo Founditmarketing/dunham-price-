@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Phone, Sliders } from "lucide-react";
 
 import { SITE } from "@/lib/content";
+import { EASE } from "@/lib/motion";
 import {
   APPLICATIONS,
   CONDITIONS,
@@ -15,8 +16,6 @@ import {
   type SpecCondition,
   type SpecInputs,
 } from "@/lib/spec";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 const PSI_VALUES = [2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000] as const;
 const SLUMP_MIN = 2;

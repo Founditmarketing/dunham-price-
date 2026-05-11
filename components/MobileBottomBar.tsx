@@ -6,8 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Phone } from "lucide-react";
 
 import { SITE } from "@/lib/content";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 /**
  * Sticky mobile-only conversion bar.

@@ -4,16 +4,15 @@ import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { ProjectCard } from "@/components/ProjectCard";
+import type { DivisionSlug } from "@/lib/capabilities";
+import { EASE } from "@/lib/motion";
 import {
   CATEGORY_LABELS,
   DIVISION_LABELS,
   type Project,
   type ProjectCategory,
 } from "@/lib/projects";
-import type { DivisionSlug } from "@/lib/capabilities";
 import type { Project as HomeProject } from "@/types";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface ProjectsIndexProps {
   projects: Project[];

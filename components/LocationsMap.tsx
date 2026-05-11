@@ -5,9 +5,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Clock, MapPin, Navigation, Phone } from "lucide-react";
 
 import { LOCATIONS, SITE } from "@/lib/content";
+import { EASE } from "@/lib/motion";
 import type { LocationItem } from "@/types";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
  * Google Maps directions URL. Routes the buyer's current location → yard.
@@ -677,7 +676,7 @@ function LocationRow({
     <motion.li
       initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, delay: index * 0.08, ease: EASE }}
       className="border-t border-line"
     >

@@ -3,8 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { CERTIFICATIONS } from "@/lib/content";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 /**
  * Condensed credentials band slotted directly under the hero.

@@ -5,18 +5,17 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
+import { EASE } from "@/lib/motion";
 import type { Project } from "@/types";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface ProjectCardProps {
   project: Project;
+  /** Where the card links. Required: every caller passes a real route. */
+  href: string;
   /** Sequence number stamped into the top-right corner. */
   index?: number;
   /** `next/image` sizes hint. Defaults to a horizontal-strip-friendly value. */
   sizes?: string;
-  /** Where the card links — defaults to `#` until project detail pages exist. */
-  href?: string;
   /** Stagger delay multiplier when used inside `whileInView`. */
   delay?: number;
 }
@@ -25,12 +24,16 @@ interface ProjectCardProps {
  * Editorial portrait project card. Used by both the homepage projects strip
  * and the capabilities cross-sell strip — same visual language, different
  * outer shell (snap track vs grid).
+ *
+ * `href` is required. The previous default of `"#"` predated the project
+ * detail routes; now that those routes ship, every caller passes a real
+ * path and the dead default could only ever surface a regression.
  */
 export function ProjectCard({
   project,
+  href,
   index = 0,
   sizes = "(min-width: 1280px) 28vw, (min-width: 1024px) 32vw, (min-width: 768px) 44vw, (min-width: 640px) 58vw, 78vw",
-  href = "#",
   delay = 0,
 }: ProjectCardProps) {
   const prefersReducedMotion = useReducedMotion();

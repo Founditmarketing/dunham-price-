@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 interface PourStatProps {
   /** Pre-formatted hero number, e.g. "12,000". */

@@ -6,9 +6,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { MixerMark } from "@/components/MixerMark";
 import { TIMELINE } from "@/lib/content";
+import { EASE } from "@/lib/motion";
 import type { TimelineCategory, TimelineMilestone } from "@/types";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 const CATEGORY_LABEL: Record<TimelineCategory, string> = {
   founding: "Founding",
@@ -245,12 +244,14 @@ function MilestoneCard({
       className="group relative flex h-full flex-col gap-5 border border-line bg-elevated p-6 sm:p-7"
     >
       {/* Pour rule. Scales in from the top of the card on view, matching
-          the page's signature pour-and-settle motion (PourStat, Hero). */}
+          the page's signature pour-and-settle motion (PourStat, Hero).
+          Threshold lowered (was 0.4) so the rule never gets stuck at
+          scaleY:0 on a fast horizontal scroll past a snap edge. */}
       <motion.span
         aria-hidden="true"
         initial={prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }}
         whileInView={{ scaleY: 1 }}
-        viewport={{ once: true, amount: 0.4 }}
+        viewport={{ once: true, amount: 0.15 }}
         transition={{
           duration: prefersReducedMotion ? 0 : 1.0,
           delay: prefersReducedMotion ? 0 : 0.15,

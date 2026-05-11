@@ -2,9 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
+import { EASE } from "@/lib/motion";
 import type { ProjectTestimonial as ProjectTestimonialData } from "@/lib/projects";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface ProjectTestimonialProps {
   testimonial: ProjectTestimonialData;
@@ -41,7 +40,11 @@ export function ProjectTestimonial({ testimonial }: ProjectTestimonialProps) {
             prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 18 }
           }
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+            margin: "0px 0px -10% 0px",
+          }}
           transition={{ duration: 1.1, ease: EASE }}
           id="testimonial-heading"
           className="lg:col-span-10"

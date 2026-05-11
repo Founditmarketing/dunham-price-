@@ -5,8 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { CertMark } from "@/components/CertMark";
 import { CERTIFICATIONS } from "@/lib/content";
 import { QC_CHECKPOINTS } from "@/lib/capabilities";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 /**
  * Quality control + certifications band, cream theme.

@@ -4,8 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
 import { CERTIFICATIONS } from "@/lib/content";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 /**
  * Abstract industrial mark per certification.

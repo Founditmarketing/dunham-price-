@@ -2,9 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
+import { EASE } from "@/lib/motion";
 import type { Project } from "@/lib/projects";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface ProjectNarrativeProps {
   project: Project;
@@ -33,7 +32,11 @@ export function ProjectNarrative({ project }: ProjectNarrativeProps) {
             prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 18 }
           }
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+            margin: "0px 0px -10% 0px",
+          }}
           transition={{ duration: 1.0, ease: EASE }}
           className="lg:col-span-6 lg:pr-12 xl:pr-20"
         >
@@ -65,7 +68,11 @@ export function ProjectNarrative({ project }: ProjectNarrativeProps) {
             prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 18 }
           }
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+            margin: "0px 0px -10% 0px",
+          }}
           transition={{ duration: 1.0, delay: 0.15, ease: EASE }}
           className="border-t border-ink/10 pt-12 lg:col-span-6 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0 xl:pl-20"
         >

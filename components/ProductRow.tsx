@@ -3,8 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import type { CapabilityProduct } from "@/lib/capabilities";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 interface ProductRowProps {
   product: CapabilityProduct;

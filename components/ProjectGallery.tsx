@@ -5,9 +5,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
+import { EASE } from "@/lib/motion";
 import type { ProjectImage } from "@/lib/projects";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface ProjectGalleryProps {
   images: ProjectImage[];

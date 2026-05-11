@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 type FactCategory = "dispatch" | "qc" | "capability" | "schedule" | "credentials";
 

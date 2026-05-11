@@ -2,6 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
+import { EASE } from "@/lib/motion";
+
 interface HazardStripeProps {
   /** Pixel height of the band. */
   height?: number;
@@ -36,7 +38,7 @@ export function HazardStripe({
         initial={prefersReducedMotion ? { x: 0 } : { x: initialX }}
         whileInView={{ x: 0 }}
         viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1.0, ease: EASE }}
       />
     </div>
   );

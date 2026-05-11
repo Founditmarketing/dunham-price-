@@ -7,8 +7,7 @@ import { ArrowRight, Phone, Play } from "lucide-react";
 
 import { MagneticButton } from "@/components/MagneticButton";
 import { HERO, SITE } from "@/lib/content";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 /**
  * Decide whether the looping background video is appropriate for this client.

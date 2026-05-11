@@ -5,8 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { HazardStripe } from "@/components/HazardStripe";
 import { QuoteForm } from "@/components/QuoteForm";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 interface QuoteCTAProps {
   /** Override the headline (defaults to "Ready to build?"). */

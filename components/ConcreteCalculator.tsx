@@ -11,6 +11,8 @@ import {
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Calculator } from "lucide-react";
 
+import { EASE } from "@/lib/motion";
+
 type Mode = "slab" | "footing" | "column";
 
 interface NumberFieldProps {
@@ -24,8 +26,6 @@ interface NumberFieldProps {
   max?: number;
   step?: number;
 }
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 const TABS: { id: Mode; label: string; sub: string }[] = [
   { id: "slab", label: "Slab", sub: "Patios, driveways, floors" },
