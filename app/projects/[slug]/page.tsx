@@ -100,16 +100,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   return (
     <>
-      <a
-        href="#metrics"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-[0.18em] focus:text-ink"
-      >
-        Skip to project details
-      </a>
-
       <Nav />
 
-      <main id="main">
+      <main id="main" tabIndex={-1} className="outline-none">
         <ProjectHero project={project} index={index} total={total} />
 
         <div id="metrics">

@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 
 import type { CapabilityProduct } from "@/lib/capabilities";
 
@@ -72,12 +70,11 @@ export function ProductImageCard({
       className={`group relative ${surface} ${ring}`}
       data-print-row
     >
-      <Link
-        // TODO: link to product detail
-        href="#"
-        aria-label={`${product.name} — ${product.spec ?? ""} ${product.description}`}
-        className="flex h-full flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-      >
+      {/* Card shell. Was wrapped in <Link href="#"> previously, but no
+          per-product detail pages exist yet, so the click was deceptive.
+          When product detail routes ship, wrap this in a Link and restore
+          the trailing "View product →" affordance below. */}
+      <div className="flex h-full flex-col">
         {/* Image / spec-block */}
         <div className="relative aspect-square w-full overflow-hidden">
           {product.image ? (
@@ -149,16 +146,8 @@ export function ProductImageCard({
           <p className={`text-sm leading-relaxed ${muted}`}>
             {product.description}
           </p>
-          <span
-            className={`mt-auto inline-flex items-center gap-2 pt-2 font-mono text-[0.65rem] uppercase tracking-[0.2em] transition-transform duration-500 group-hover:translate-x-1 ${
-              theme === "dark" ? "text-accent" : "text-ink"
-            }`}
-          >
-            View product
-            <ArrowUpRight className="size-3" aria-hidden />
-          </span>
         </div>
-      </Link>
+      </div>
     </motion.article>
   );
 }

@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 
 import type { CapabilityProduct } from "@/lib/capabilities";
 
@@ -40,22 +38,19 @@ export function ProductRow({
         isDark ? "border-line" : "border-ink/10"
       } border-t`}
     >
-      {/* Hover/focus underline */}
+      {/* Hover underline. Stays as a tactile detail even though the row no
+          longer links anywhere — it pairs with the description's slight
+          fade-in to feel responsive on hover without promising navigation. */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-accent transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 group-focus-within:scale-x-100"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-accent transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
       />
 
-      <Link
-        // TODO: link to product detail
-        href="#"
-        aria-label={`${product.name} — ${product.description}`}
-        className={`grid grid-cols-1 gap-4 py-7 sm:py-9 lg:grid-cols-12 lg:gap-8 lg:py-10 ${
-          isDark
-            ? "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-            : "focus:outline-none focus-visible:ring-2 focus-visible:ring-ink"
-        }`}
-      >
+      {/* Layout shell. Was wrapped in <Link href="#"> previously, but no
+          per-product detail pages exist yet, so the click was deceptive.
+          When product detail routes ship, wrap this grid back in a Link
+          and restore the trailing arrow + "View product" affordance. */}
+      <div className="grid grid-cols-1 gap-4 py-7 sm:py-9 lg:grid-cols-12 lg:gap-8 lg:py-10">
         {/* Left: mono index + product name */}
         <div className="flex items-baseline gap-4 lg:col-span-6 lg:gap-6">
           <span
@@ -75,23 +70,17 @@ export function ProductRow({
           </h3>
         </div>
 
-        {/* Right: description + arrow */}
-        <div className="flex items-start gap-6 lg:col-span-6 lg:items-center">
+        {/* Right: description */}
+        <div className="lg:col-span-6">
           <p
-            className={`flex-1 max-w-[60ch] text-sm leading-relaxed sm:text-base ${
+            className={`max-w-[60ch] text-sm leading-relaxed sm:text-base ${
               isDark ? "text-primary/75" : "text-ink/75"
             }`}
           >
             {product.description}
           </p>
-          <ArrowUpRight
-            aria-hidden
-            className={`mt-1 size-5 shrink-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:-translate-y-1 ${
-              isDark ? "text-accent" : "text-ink/60 group-hover:text-ink"
-            }`}
-          />
         </div>
-      </Link>
+      </div>
     </motion.li>
   );
 }

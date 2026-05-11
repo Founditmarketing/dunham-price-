@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Inter, JetBrains_Mono } from "next/font/google";
 
 import { MobileBottomBar } from "@/components/MobileBottomBar";
@@ -83,6 +83,23 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
+};
+
+/**
+ * `viewport-fit=cover` is required for iOS to expose env(safe-area-inset-*)
+ * non-zero values. Without it, the MobileBottomBar's
+ * paddingBottom: env(safe-area-inset-bottom) was always 0 on iPhones with
+ * a home indicator, so the yellow CTA would sit underneath the gesture bar
+ * and become hard to tap on the last few millimeters of the screen.
+ *
+ * Theme color tells iOS Safari and Chrome to tint the address bar to match
+ * the page's dark surface so the chrome doesn't visually clash on scroll.
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0e0e0f",
 };
 
 /**
@@ -197,6 +214,16 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-base text-primary font-body min-h-screen">
+        {/* Site-wide skip link. Lives in the root layout so every route gets
+            it (previously only the homepage had one). Targets #main, which
+            every page wires up with tabIndex={-1} so post-jump focus
+            actually lands on the main landmark for keyboard users. */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-[0.18em] focus:text-ink"
+        >
+          Skip to content
+        </a>
         {children}
         <MobileBottomBar />
       </body>

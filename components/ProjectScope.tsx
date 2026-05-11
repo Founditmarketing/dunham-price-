@@ -136,17 +136,24 @@ export function ProjectScope({ project }: ProjectScopeProps) {
           <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted">
             Document ID — {project.slug.toUpperCase()}-{project.year}
           </p>
-          <a
-            // TODO: generate PDF
-            href="#"
-            className="group inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-accent transition hover:text-accent-hot"
+          {/* PDF download.
+              The PDF generation pipeline isn't built yet, but a dead
+              `<a href="#">` was lying to the user about a working
+              download. Disabled <button> with explanatory mono caption
+              keeps the design intent (here is where the spec sheet will
+              live) without faking the affordance.
+              // TODO: wire to /api/projects/[slug]/spec.pdf when the
+              renderer ships. */}
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            title="Spec sheet PDF coming soon"
+            className="group inline-flex cursor-not-allowed items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-muted/70"
           >
-            <Download
-              aria-hidden
-              className="size-3.5 transition-transform duration-500 group-hover:translate-y-0.5"
-            />
-            Download spec sheet (PDF) →
-          </a>
+            <Download aria-hidden className="size-3.5" />
+            Spec sheet (PDF) · coming soon
+          </button>
         </div>
       </div>
     </section>

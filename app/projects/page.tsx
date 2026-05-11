@@ -17,16 +17,9 @@ export const metadata: Metadata = {
 export default function ProjectsIndexPage() {
   return (
     <>
-      <a
-        href="#projects-index-heading"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-[0.18em] focus:text-ink"
-      >
-        Skip to projects
-      </a>
-
       <Nav />
 
-      <main id="main">
+      <main id="main" tabIndex={-1} className="outline-none">
         {/* Compact header — single column, no media. Lets the grid breathe. */}
         <section
           aria-label="Projects header"

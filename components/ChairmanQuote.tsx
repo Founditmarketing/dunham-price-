@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
 import { CHAIRMAN } from "@/lib/content";
 
@@ -52,27 +50,23 @@ export function ChairmanQuote() {
             {CHAIRMAN.quote}
           </motion.blockquote>
 
-          <motion.div
+          {/* Attribution row.
+              The previous "Read the full letter →" CTA was removed because
+              the quote on this page IS the chairman's letter; there was no
+              fuller letter to link to and href="#" was deceptive. When a
+              proper /about page lands with the full letter, restore the CTA
+              there. */}
+          <motion.p
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
-            className="mt-12 flex flex-col items-start gap-8 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between"
+            className="mt-12 border-t border-line pt-8 font-mono text-[0.72rem] uppercase tracking-[0.22em] text-muted"
           >
-            <div className="font-mono text-[0.72rem] uppercase tracking-[0.22em] text-muted">
-              <span className="text-primary">— {CHAIRMAN.attribution}</span>
-              <span className="mx-2 text-accent">//</span>
-              <span>{CHAIRMAN.role}</span>
-            </div>
-
-            <Link
-              href={CHAIRMAN.cta.href}
-              className="group -mx-3 inline-flex min-h-[44px] items-center gap-3 px-3 py-3 font-mono text-xs uppercase tracking-[0.2em] text-accent transition hover:text-accent-hot"
-            >
-              {CHAIRMAN.cta.label}
-              <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
+            <span className="text-primary">— {CHAIRMAN.attribution}</span>
+            <span className="mx-2 text-accent">//</span>
+            <span>{CHAIRMAN.role}</span>
+          </motion.p>
         </div>
       </div>
     </section>

@@ -16,13 +16,6 @@ import { TrustStrip } from "@/components/TrustStrip";
 export default function HomePage() {
   return (
     <>
-      <a
-        href="#capabilities"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-[0.18em] focus:text-ink"
-      >
-        Skip to content
-      </a>
-
       <Nav />
       <ScrollChoreography />
 
@@ -34,7 +27,7 @@ export default function HomePage() {
           so the technical buyer sees ACI / PCI / NRMCA / DOTD before
           scrolling past the fold; the bigger Certifications cream section
           remains the deep credential moment lower in the page. */}
-      <main id="main">
+      <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <TrustStrip />
         <StatBar />

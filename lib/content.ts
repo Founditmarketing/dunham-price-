@@ -27,7 +27,7 @@ export const NAV_LINKS: NavLinkItem[] = [
   { label: "Projects", href: "/#projects" },
   { label: "About", href: "/#chairman" },
   { label: "Locations", href: "/#locations" },
-  { label: "Careers", href: "#" },
+  { label: "Careers", href: "/careers" },
 ];
 
 export const HERO = {
@@ -238,12 +238,11 @@ export const CHAIRMAN = {
     "It all started over 80 years ago when my grandfather, Rowland Price, batched the first load of concrete. Now as we enter the fourth generation, the Price family is still as involved as we were on that first day.",
   attribution: "ROB PRICE, JR.",
   role: "CHAIRMAN OF THE BOARD",
-  cta: { label: "Read the full letter", href: "#" },
 } as const;
 
 export const FOOTER_COMPANY: NavLinkItem[] = [
   { label: "About", href: "/#chairman" },
   { label: "Projects", href: "/#projects" },
-  { label: "Careers", href: "#" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/#quote" },
 ];

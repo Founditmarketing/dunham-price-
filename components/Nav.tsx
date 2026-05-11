@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, Phone, X } from "lucide-react";
 
@@ -14,6 +14,13 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+
+  // Refs used by the mobile menu's focus management. The hamburger doubles
+  // as the close button (tapping it again toggles the menu shut), so on open
+  // we move focus into the dialog container itself; on close we restore
+  // focus to the hamburger.
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SCROLLED_AT);
@@ -30,6 +37,38 @@ export function Nav() {
     return () => {
       document.body.style.overflow = prev;
     };
+  }, [open]);
+
+  // Mobile menu a11y: Escape closes, focus moves into the dialog container
+  // on open and returns to the hamburger trigger on close. Without this the
+  // menu was role="dialog" aria-modal="true" but keyboard users had no way
+  // to escape and screen-reader focus stayed on the trigger.
+  useEffect(() => {
+    if (!open) return;
+    // Move focus into the dialog on the next frame so AnimatePresence's
+    // enter animation has begun and the dialog is in the layout tree.
+    const raf = requestAnimationFrame(() => dialogRef.current?.focus());
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  // Return focus to the hamburger when the menu closes (skipped on the very
+  // first render so the page doesn't grab focus on load).
+  const wasOpenRef = useRef(false);
+  useEffect(() => {
+    if (wasOpenRef.current && !open) {
+      triggerRef.current?.focus();
+    }
+    wasOpenRef.current = open;
   }, [open]);
 
   return (
@@ -82,6 +121,7 @@ export function Nav() {
               Request a Quote
             </Link>
             <button
+              ref={triggerRef}
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
@@ -98,14 +138,19 @@ export function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={dialogRef}
             id="mobile-nav"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 flex flex-col bg-base lg:hidden"
+            // tabIndex=-1 so we can programmatically focus the dialog on open.
+            // Keyboard Tab order then flows naturally into the nav links.
+            tabIndex={-1}
+            className="fixed inset-0 z-40 flex flex-col bg-base outline-none lg:hidden"
             role="dialog"
             aria-modal="true"
+            aria-label="Site navigation"
           >
             <div className="flex flex-1 flex-col justify-between px-6 pb-10 pt-24 sm:px-10">
               <ul className="flex flex-col gap-2">

@@ -89,10 +89,19 @@ export function QualityBand() {
                     ease: EASE,
                   }}
                 >
-                  <a
-                    href="#"
+                  {/* Credential plate.
+                      Was an <a href="#"> previously, but the cert plates
+                      aren't navigation: they're decorative trust marks. The
+                      `aria-label` and meaningful content live on the plate
+                      itself; converting from a dead anchor to a non-link
+                      <div> removes the deceptive "click does nothing"
+                      affordance while keeping the hover lift as a tactile
+                      detail. When real cert URLs land, restore the anchor
+                      with the actual href. */}
+                  <div
+                    role="img"
                     aria-label={`${c.full} (${c.abbr})`}
-                    className="group relative flex aspect-[5/3] flex-col items-stretch justify-between border border-ink/15 bg-cream p-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-accent hover:shadow-[0_12px_24px_-12px_rgba(10,10,11,0.18)] focus:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent sm:p-4"
+                    className="group relative flex aspect-[5/3] flex-col items-stretch justify-between border border-ink/15 bg-cream p-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-accent hover:shadow-[0_12px_24px_-12px_rgba(10,10,11,0.18)] sm:p-4"
                   >
                     <span className="font-mono text-[0.55rem] uppercase tracking-[0.2em] text-ink/55">
                       {String(i + 1).padStart(2, "0")}
@@ -107,7 +116,7 @@ export function QualityBand() {
                     <span className="block text-center font-mono text-[0.5rem] uppercase leading-tight tracking-[0.16em] text-ink/55">
                       {c.full}
                     </span>
-                  </a>
+                  </div>
                 </motion.li>
               ))}
             </ul>

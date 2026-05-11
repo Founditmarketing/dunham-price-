@@ -65,16 +65,17 @@ export function Footer() {
         </FooterCol>
       </div>
 
+      {/* Bottom bar.
+          The previous SocialLink cluster (FB/IG/LI) was removed because
+          dunhamprice.com doesn't have public social profiles — the buttons
+          rendered with href="#" and clicking them did nothing. When real
+          handles exist, re-add a SocialLink cluster with the actual URLs;
+          until then, this row stays clean rather than lying to the user. */}
       <div className="border-t border-line">
-        <div className="mx-auto flex max-w-[1480px] flex-col items-start justify-between gap-6 px-6 py-8 sm:flex-row sm:items-center sm:px-10">
+        <div className="mx-auto flex max-w-[1480px] flex-col items-start justify-between gap-3 px-6 py-8 sm:flex-row sm:items-center sm:px-10">
           <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted">
             © {year} {SITE.name}. All rights reserved. Westlake, LA.
           </p>
-          <div className="flex items-center gap-2">
-            <SocialLink href="#" label="Facebook">FB</SocialLink>
-            <SocialLink href="#" label="Instagram">IG</SocialLink>
-            <SocialLink href="#" label="LinkedIn">LI</SocialLink>
-          </div>
           <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted">
             Privacy · Terms · Accessibility
           </p>
@@ -123,22 +124,3 @@ function FooterLink({
   );
 }
 
-function SocialLink({
-  href,
-  label,
-  children,
-}: {
-  href: string;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <a
-      href={href}
-      aria-label={label}
-      className="inline-flex size-11 items-center justify-center border border-line font-mono text-[0.65rem] uppercase tracking-[0.18em] text-primary/75 transition hover:border-accent hover:text-accent"
-    >
-      <span aria-hidden="true">{children}</span>
-    </a>
-  );
-}
