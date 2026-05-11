@@ -41,7 +41,12 @@ export function ProjectNarrative({ project }: ProjectNarrativeProps) {
           <h3 className="font-display text-[clamp(1.75rem,3.4vw,3rem)] font-black uppercase leading-[0.95] tracking-tight text-ink">
             {project.challengeTitle}
           </h3>
-          <p className="mt-7 max-w-[60ch] text-base leading-[1.65] text-ink/80 sm:text-lg">
+          {/* Narrative body in a humanist serif so the project storytelling
+              passages have a different register than the spec / catalog
+              copy elsewhere. Gives the eye a place to rest after the
+              all-Inter body register and feels editorial rather than
+              datasheet. */}
+          <p className="font-serif-narrative mt-7 max-w-[60ch] text-[1.0625rem] leading-[1.65] text-ink/85 sm:text-[1.15rem]">
             {project.challenge}
           </p>
         </motion.div>
@@ -68,7 +73,7 @@ export function ProjectNarrative({ project }: ProjectNarrativeProps) {
           <h3 className="font-display text-[clamp(1.75rem,3.4vw,3rem)] font-black uppercase leading-[0.95] tracking-tight text-ink">
             {project.solutionTitle}
           </h3>
-          <p className="mt-7 max-w-[60ch] text-base leading-[1.65] text-ink/80 sm:text-lg">
+          <p className="font-serif-narrative mt-7 max-w-[60ch] text-[1.0625rem] leading-[1.65] text-ink/85 sm:text-[1.15rem]">
             {project.solution}
           </p>
         </motion.div>

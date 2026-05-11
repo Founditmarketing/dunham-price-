@@ -33,6 +33,12 @@ export interface LocationItem {
   address: string;
   /** [longitude, latitude] in decimal degrees, used for the stylized map. */
   coords: [number, number];
+  /**
+   * 2-letter abbreviation surfaced on the map for non-active yards. Lets
+   * three clustered pins identify themselves without their full labels
+   * colliding (e.g. "WL" for Westlake, "LC" for Lake Charles).
+   */
+  code: string;
   /** Optional yard-specific dispatch line. */
   phone?: string;
   /** Optional human-readable hours, e.g. "Mon–Fri · 6a–5p". */

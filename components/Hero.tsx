@@ -210,13 +210,28 @@ export function Hero() {
           </span>
         </h1>
 
+        {/* Subhead.
+            Most expensive sentence on the page; previously washed out at
+            text-primary/90 over the hero photo. Bumped to full-opacity
+            primary, font-medium for body weight, and reset the leading
+            so the four short clauses land like a manifesto. The first
+            sentence ("Four generations. Four divisions. One standard.")
+            is now a separate <span> with display weight and the leading
+            yellow rule, so it reads as the headline-adjacent claim it
+            actually is — not as quiet supporting copy. */}
         <motion.p
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
-          className="max-w-[50ch] text-[0.95rem] leading-relaxed text-primary/90 sm:text-base lg:text-lg"
+          className="max-w-[52ch] text-primary"
         >
-          {HERO.subhead}
+          <span className="block font-display text-[clamp(1.15rem,1.8vw,1.55rem)] font-bold uppercase leading-[1.1] tracking-tight text-primary">
+            <span aria-hidden="true" className="mr-3 inline-block h-px w-6 align-middle bg-accent" />
+            {HERO.subheadClaim}
+          </span>
+          <span className="mt-3 block text-[0.95rem] font-medium leading-[1.55] text-primary/95 sm:text-base lg:text-[1.0625rem]">
+            {HERO.subheadDetail}
+          </span>
         </motion.p>
 
         <motion.div
@@ -294,8 +309,13 @@ export function Hero() {
         </motion.ul>
       </div>
 
-      {/* Editorial corner ornament — replaces the 2019-era vertical SCROLL.
-          Animated thin yellow rule + a single live mono fact, set vertically. */}
+      {/* Editorial corner ornament — pour signature.
+          Previously an infinite pulse (felt like a heartbeat); now a single
+          pour-and-settle that establishes the page-wide motion idiom: a
+          yellow rule fills from the top down on view, then stays as a
+          permanent accent. Same motion language is reused by the PourStat
+          interstitial below the capabilities grid, so the page reads as
+          having ONE signature gesture instead of a dozen one-offs. */}
       <div
         className="pointer-events-none absolute bottom-8 right-6 z-[2] hidden items-end gap-3 sm:right-10 lg:flex"
         aria-hidden="true"
@@ -304,18 +324,19 @@ export function Hero() {
           Calcasieu Parish · 4 Yards · 86 Years
         </span>
         <motion.span
-          initial={{ scaleY: 0.2, opacity: 0.5, originY: 0 }}
-          animate={
+          initial={
             prefersReducedMotion
-              ? undefined
-              : { scaleY: [0.2, 1, 0.2], opacity: [0.4, 1, 0.4] }
+              ? { scaleY: 1, opacity: 0.85 }
+              : { scaleY: 0, opacity: 0 }
           }
+          animate={{ scaleY: 1, opacity: 0.85 }}
           transition={{
-            duration: 2.4,
-            ease: [0.16, 1, 0.3, 1],
-            repeat: Infinity,
+            duration: prefersReducedMotion ? 0 : 1.6,
+            delay: prefersReducedMotion ? 0 : 0.9,
+            ease: EASE,
           }}
-          className="block h-16 w-px origin-top bg-accent"
+          style={{ transformOrigin: "top" }}
+          className="block h-16 w-px bg-accent"
         />
       </div>
     </section>

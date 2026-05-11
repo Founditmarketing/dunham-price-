@@ -34,8 +34,17 @@ export const HERO = {
   eyebrow: "EST. 1939 · SOUTHWEST LOUISIANA",
   headlineLine1: "THERE'S HISTORY",
   headlineLine2: "IN THE MIX.",
-  subhead:
-    "Four generations. Four divisions. One standard. Concrete, precast, and aggregates engineered for Southwest Louisiana since 1939.",
+  /**
+   * Hero subhead is rendered in two visual registers in the Hero component:
+   *   - `subheadClaim` reads as a manifesto line, set in display weight
+   *     with the leading yellow rule.
+   *   - `subheadDetail` is the body-weight clarification underneath.
+   * Keeping them as separate fields here means a future copy edit (or
+   * CMS swap) can rewrite either half independently.
+   */
+  subheadClaim: "Four generations. Four divisions. One standard.",
+  subheadDetail:
+    "Concrete, precast, and aggregates engineered for Southwest Louisiana since 1939.",
   videoSrc:
     "https://dunhamprice.com/wp-content/uploads/2025/09/dunham_price_llc_1-720p.mp4",
   // TODO: replace with real poster frame
@@ -132,6 +141,7 @@ export const LOCATIONS: LocationItem[] = [
     id: "westlake",
     city: "Westlake",
     state: "LA",
+    code: "WL",
     address: "210 Mike Hooks Rd.",
     // TODO: Mapbox token + real coordinates
     coords: [-93.243, 30.246],
@@ -143,6 +153,7 @@ export const LOCATIONS: LocationItem[] = [
     id: "lake-charles",
     city: "Lake Charles",
     state: "LA",
+    code: "LC",
     address: "811 W. Lincoln Rd.",
     coords: [-93.21, 30.235],
     phone: "337-433-3900",
@@ -153,6 +164,7 @@ export const LOCATIONS: LocationItem[] = [
     id: "sulphur",
     city: "Sulphur",
     state: "LA",
+    code: "SP",
     address: "6121 LA-27",
     coords: [-93.378, 30.236],
     phone: "337-433-3900",
@@ -163,6 +175,7 @@ export const LOCATIONS: LocationItem[] = [
     id: "ragley",
     city: "Ragley",
     state: "LA",
+    code: "RG",
     address: "15003 US-171",
     coords: [-93.235, 30.502],
     phone: "337-433-3900",

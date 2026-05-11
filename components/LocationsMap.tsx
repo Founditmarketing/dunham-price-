@@ -422,34 +422,59 @@ function IllustratedMap({
               />
               {/* Center dot */}
               <circle r={isActive ? 3 : 2} fill={isActive ? "#f5c518" : "#9a9a9d"} />
-              {/* Label */}
-              <g transform={`translate(${labelOnRight ? 18 : -18} -10)`}>
+
+              {/* Labels.
+                  Three of the four yards (Westlake, Lake Charles, Sulphur)
+                  cluster in the lower-center of the map and their full
+                  city + drive-time labels collided badly on mobile. The
+                  fix: only the active yard shows the full label. Non-
+                  active yards show a tight 2-letter code right of the
+                  pin, which keeps every yard identifiable without ever
+                  overlapping. The active label is also routed slightly
+                  further from the pin so the crosshair has air around it. */}
+              {isActive ? (
+                <g transform={`translate(${labelOnRight ? 22 : -22} -10)`}>
+                  <text
+                    x="0"
+                    y="0"
+                    textAnchor={labelOnRight ? "start" : "end"}
+                    fontSize="11"
+                    fontWeight="700"
+                    fontFamily="var(--font-mono)"
+                    letterSpacing="2"
+                    fill="#f4f1ea"
+                    style={{ textTransform: "uppercase", pointerEvents: "none" }}
+                  >
+                    {l.city}
+                  </text>
+                  <text
+                    x="0"
+                    y="13"
+                    textAnchor={labelOnRight ? "start" : "end"}
+                    fontSize="8"
+                    fontFamily="var(--font-mono)"
+                    letterSpacing="1.5"
+                    fill="#f5c518"
+                    style={{ textTransform: "uppercase", pointerEvents: "none" }}
+                  >
+                    {l.driveTime?.replace(/^~/, "") ?? ""}
+                  </text>
+                </g>
+              ) : (
                 <text
-                  x="0"
-                  y="0"
+                  x={labelOnRight ? 14 : -14}
+                  y="3"
                   textAnchor={labelOnRight ? "start" : "end"}
-                  fontSize="11"
-                  fontWeight="700"
-                  fontFamily="var(--font-mono)"
-                  letterSpacing="2"
-                  fill={isActive ? "#f4f1ea" : "#bfbfc1"}
-                  style={{ textTransform: "uppercase", pointerEvents: "none" }}
-                >
-                  {l.city}
-                </text>
-                <text
-                  x="0"
-                  y="13"
-                  textAnchor={labelOnRight ? "start" : "end"}
-                  fontSize="8"
+                  fontSize="9"
+                  fontWeight="600"
                   fontFamily="var(--font-mono)"
                   letterSpacing="1.5"
-                  fill={isActive ? "#f5c518" : "#7a7a7d"}
+                  fill="#9a9a9d"
                   style={{ textTransform: "uppercase", pointerEvents: "none" }}
                 >
-                  {l.driveTime?.replace(/^~/, "") ?? ""}
+                  {l.code}
                 </text>
-              </g>
+              )}
             </g>
           );
         })}

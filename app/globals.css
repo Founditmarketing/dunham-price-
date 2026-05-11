@@ -130,6 +130,23 @@
     line-height: 1;
   }
 
+  /* Humanist serif register for narrative passages.
+     Site-wide body is Inter; using it for everything from product specs
+     to project storytelling makes the page read as one register and the
+     eye has nowhere to rest. This utility introduces a serif specifically
+     for editorial paragraphs (project Challenge / Approach, chairman's
+     letter, future about-page prose). System stack — no new font load —
+     biased toward humanist serifs that pair cleanly with industrial sans.
+     Slight optical-size and feature tweaks make digits and small caps
+     feel intentional rather than browser-default. */
+  .font-serif-narrative {
+    font-family: "Source Serif 4", "Source Serif Pro", Charter, "Iowan Old Style",
+      "Apple Garamond", Cambria, Georgia, ui-serif, serif;
+    font-feature-settings: "kern", "liga", "calt", "onum";
+    font-optical-sizing: auto;
+    letter-spacing: -0.005em;
+  }
+
   /* Fluid display headline used in hero / section heads. */
   .display-fluid {
     font-family: var(--font-display);

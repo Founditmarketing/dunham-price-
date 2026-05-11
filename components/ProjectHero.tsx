@@ -157,7 +157,7 @@ export function ProjectHero({ project, index, total }: ProjectHeroProps) {
               delay: 0.55 + titleWords.length * 0.07 + 0.3,
               ease: EASE,
             }}
-            className="mt-8 max-w-[60ch] text-base leading-relaxed text-primary/90 sm:text-lg"
+            className="font-serif-narrative mt-8 max-w-[60ch] text-[1.0625rem] leading-[1.6] text-primary/90 sm:text-[1.15rem]"
           >
             {project.summary}
           </motion.p>

@@ -7,6 +7,7 @@ import { Hero } from "@/components/Hero";
 import { LocationsMap } from "@/components/LocationsMap";
 import { MixerMark } from "@/components/MixerMark";
 import { Nav } from "@/components/Nav";
+import { PourStat } from "@/components/PourStat";
 import { ProjectsStrip } from "@/components/ProjectsStrip";
 import { QuoteCTA } from "@/components/QuoteCTA";
 import { ScrollChoreography } from "@/components/ScrollChoreography";
@@ -97,6 +98,25 @@ export default function HomePage() {
 
         <ChairmanQuote />
         <DivisionGrid />
+
+        {/* Inter-section interstitial: turns the gap between capabilities
+            and case studies into a single proof beat. Pulls the most
+            quantifiable pour from the project catalog and lands it as a
+            massive number with a pour-rule animation, giving the eye
+            something to do between the brand's "what we do" and "what
+            we've delivered." */}
+        <PourStat
+          eyebrow="Latest pour"
+          value="12,000"
+          numeric={12000}
+          unit="yd³"
+          claim="Delivered in a 36-hour continuous pour. All four plants in lockstep, two batch supervisors radio-linked to the dock, every fifth load tested. Zero cold joints."
+          source={{
+            label: "Port of Lake Charles · 2023",
+            href: "/projects/port-of-lake-charles-expansion",
+          }}
+        />
+
         <DivisionMarquee />
         <ProjectsStrip />
         <LocationsMap />

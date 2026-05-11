@@ -78,7 +78,11 @@ export function MobileBottomBar() {
           transition={{ duration: 0.45, ease: EASE }}
           // z-30 keeps it below the mobile menu overlay (z-40), so opening
           // the hamburger always blankets the bar.
-          className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-base/95 backdrop-blur-md lg:hidden"
+          // md:hidden (was lg:hidden) so the bar truly stays mobile-only.
+          // From the md breakpoint up the desktop nav already exposes the
+          // phone + Request a Quote CTA, and the sticky bar was visually
+          // competing with content on tablet / narrow desktop widths.
+          className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-base/95 backdrop-blur-md md:hidden"
           style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
           data-print-hide
         >
