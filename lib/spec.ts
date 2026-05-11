@@ -333,6 +333,12 @@ export function getMixRecommendation(inputs: SpecInputs): SpecRecommendation {
  * Build the quote URL with the current spec encoded as query params, so the
  * dispatch team picks up the load already knowing exactly what was selected.
  * Lives in this module so the encoding stays in sync with the inputs shape.
+ *
+ * URL structure: `/?service=...#quote`. The query lives on the URL proper
+ * (so `useSearchParams()` in QuoteForm reads it cleanly) and the hash
+ * scrolls the browser to the QuoteCTA section. The reverse order
+ * (`/#quote?...`) puts the query inside the hash where the search params
+ * API can't see it, which silently broke the pre-fill before this fix.
  */
 export function quoteHrefForSpec(inputs: SpecInputs): string {
   const params = new URLSearchParams({
@@ -344,5 +350,5 @@ export function quoteHrefForSpec(inputs: SpecInputs): string {
   if (inputs.conditions.length > 0) {
     params.set("conditions", inputs.conditions.join(","));
   }
-  return `/#quote?${params.toString()}`;
+  return `/?${params.toString()}#quote`;
 }

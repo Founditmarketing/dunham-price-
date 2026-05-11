@@ -89,10 +89,12 @@ export function ConcreteCalculator() {
   const hasResult = yd3 > 0;
 
   // Pre-fill the quote form with the current calculation so dispatch can
-  // pick up the load without re-asking. // TODO: wire to real quote route.
+  // pick up the load without re-asking. URL structure is /?...#quote so
+  // the QuoteForm's useSearchParams() reads the params cleanly; the hash
+  // scrolls the page to the QuoteCTA section.
   const quoteHref = useMemo(() => {
     const v = hasResult ? yd3.toFixed(2) : "0";
-    return `/#quote?service=ready-mix&volume=${v}&mode=${mode}`;
+    return `/?service=ready-mix&volume=${v}&mode=${mode}#quote`;
   }, [hasResult, yd3, mode]);
 
   return (

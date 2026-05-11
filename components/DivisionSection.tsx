@@ -199,7 +199,7 @@ export function DivisionSection({ division }: DivisionSectionProps) {
           </p>
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <Link
-              href={`/#quote?service=${division.slug}`}
+              href={`/?service=${division.slug}#quote`}
               className={`group inline-flex items-center justify-between gap-5 whitespace-nowrap px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] transition ${
                 isDark
                   ? "bg-accent text-ink hover:bg-accent-hot"
@@ -210,7 +210,7 @@ export function DivisionSection({ division }: DivisionSectionProps) {
               <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" />
             </Link>
             <a
-              href={`/#quote?service=${division.slug}`}
+              href={`/?service=${division.slug}#quote`}
               className={`font-mono text-xs uppercase tracking-[0.16em] underline-offset-4 transition hover:underline ${
                 isDark ? "text-primary/85" : "text-ink/80"
               }`}

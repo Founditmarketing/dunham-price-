@@ -130,6 +130,48 @@
     line-height: 1;
   }
 
+  /* Quote form inputs.
+     Editorial bottom-line input style — no box, hairline rule below the
+     value, dark text on the QuoteCTA's yellow surface. Yellow accent on
+     focus mirrors the rest of the site's interaction language. Padding
+     keeps the rendered field tall enough to clear WCAG 2.5.5 (44px) tap
+     targets even though the visual chrome is minimal. */
+  .quote-input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.5rem 0;
+    background: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.4;
+    border: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-ink) 25%, transparent);
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.3s var(--ease-cinematic);
+  }
+  .quote-input:hover {
+    border-bottom-color: color-mix(in oklab, var(--color-ink) 50%, transparent);
+  }
+  .quote-input:focus {
+    border-bottom-color: var(--color-ink);
+    box-shadow: 0 1px 0 0 var(--color-ink);
+  }
+  .quote-input::placeholder {
+    color: color-mix(in oklab, var(--color-ink) 35%, transparent);
+  }
+  textarea.quote-input {
+    line-height: 1.5;
+    padding: 0.75rem 0;
+  }
+  /* Date pickers in WebKit need a visible color or the value disappears
+     on the yellow surface. */
+  .quote-input::-webkit-datetime-edit,
+  .quote-input::-webkit-calendar-picker-indicator {
+    color: var(--color-ink);
+  }
+
   /* Spec selector slump slider.
      Native <input type="range"> styled to read as part of the industrial
      spec aesthetic: hairline track painted by the component, square
