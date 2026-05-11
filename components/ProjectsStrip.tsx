@@ -87,7 +87,7 @@ export function ProjectsStrip() {
       id="projects"
       aria-labelledby="projects-heading"
       aria-keyshortcuts="ArrowLeft ArrowRight Home End"
-      className="relative bg-base py-24 sm:py-32 lg:py-40"
+      className="relative bg-base py-16 sm:py-24 lg:py-36"
     >
       <div className="mx-auto max-w-[1480px] px-6 sm:px-10">
         <div className="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">

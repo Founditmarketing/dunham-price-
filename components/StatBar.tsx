@@ -24,8 +24,16 @@ function CountUp({ stat, active }: { stat: Stat; active: boolean }) {
       return;
     }
     const target = stat.numeric;
-    // Years (e.g. 1939) read better counting from a recent baseline.
-    const baseline = target >= 1900 ? target - 86 : 0;
+    // Year values (e.g. 1939) don't get a count-up animation. Counting from
+    // 1853 → 1939 over a second meant viewers caught the value at "1919" or
+    // "1934" mid-frame and read those as the actual founding year, which
+    // contradicted the brand's "since 1939" everywhere else. Years just
+    // snap to their canonical value; magnitudes (4, 86) animate as before.
+    if (target >= 1900) {
+      setDisplay(stat.value);
+      return;
+    }
+    const baseline = 0;
     setDisplay(`${baseline}${stat.suffix ?? ""}`);
     const start = performance.now();
     let raf = 0;

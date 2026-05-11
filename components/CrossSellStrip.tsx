@@ -17,7 +17,7 @@ export function CrossSellStrip() {
   return (
     <section
       aria-labelledby="crosssell-heading"
-      className="relative bg-base py-24 sm:py-32 lg:py-40"
+      className="relative bg-base py-16 sm:py-24 lg:py-36"
     >
       <div className="mx-auto max-w-[1480px] px-6 sm:px-10">
         <div className="mb-12 grid gap-8 lg:mb-16 lg:grid-cols-12 lg:items-end lg:gap-12">

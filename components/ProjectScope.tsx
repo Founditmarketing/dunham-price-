@@ -30,7 +30,7 @@ export function ProjectScope({ project }: ProjectScopeProps) {
   return (
     <section
       aria-labelledby="scope-heading"
-      className="relative bg-base py-24 text-primary sm:py-32 lg:py-40"
+      className="relative bg-base py-16 text-primary sm:py-24 lg:py-36"
     >
       <div className="mx-auto max-w-[1480px] px-6 sm:px-10">
         <div className="mb-14 grid gap-8 lg:mb-20 lg:grid-cols-12 lg:items-end lg:gap-12">

@@ -21,7 +21,7 @@ export function QualityBand() {
   return (
     <section
       aria-labelledby="quality-heading"
-      className="relative bg-cream py-24 text-ink sm:py-32 lg:py-40"
+      className="relative bg-cream py-16 text-ink sm:py-24 lg:py-36"
     >
       <div className="mx-auto max-w-[1480px] px-6 sm:px-10">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">

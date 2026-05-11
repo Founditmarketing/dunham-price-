@@ -106,9 +106,15 @@ export function Hero() {
             />
           )}
         </div>
-        {/* Bottom-up dark gradient + global tint to keep type legible. */}
+        {/* Bottom-up dark gradient + global tint.
+            Strengthened from base/70 → base/85 mid-stop and pushed the dark
+            zone higher (60% mark instead of 50%) so the headline always
+            lands on a guaranteed-dark band even when the photo behind it
+            has a bright cement-truck or sky region. The previous gradient
+            was bottoming out too fast and the upper half of the second
+            headline line could read as "cut off by the photo" on iPhone. */}
         <div
-          className="absolute inset-0 bg-gradient-to-t from-base via-base/70 to-base/30"
+          className="absolute inset-0 bg-[linear-gradient(to_top,rgb(14_14_15)_0%,rgb(14_14_15)_22%,rgb(14_14_15/0.85)_48%,rgb(14_14_15/0.45)_75%,rgb(14_14_15/0.2)_100%)]"
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-base/35" aria-hidden="true" />
@@ -158,45 +164,49 @@ export function Hero() {
         </motion.p>
 
         {/* Hero headline.
-            Restructured from the per-word inline-block reveal-mask pattern
-            to a per-line block reveal. The old structure used
-            `display: inline-block; vertical-align: bottom` on each word,
-            which on narrow viewports could reflow line 2 into a baseline
-            that visually overlapped line 1 (the "second line never appears"
-            mobile bug). Block-level masks are bulletproof: each line
-            occupies its own grid row and animates independently.
+            Reveal driven by framer-motion instead of CSS keyframes + inline
+            style. iOS Safari has historically miscomputed the post-animation
+            state when `forwards` fill mode + an inline `transform` start
+            value race with React re-renders, leaving the second line's
+            inner span stuck at translateY(>0) and clipped by the parent's
+            overflow:hidden. Framer-motion drives the transform via React
+            state and survives those races cleanly.
             Mobile: clamp pulls down to 2rem so "THERE'S HISTORY" fits on
-            one line at 320px. Desktop: 9rem cap preserved. */}
+            one line at 320px. Desktop: 9rem cap preserved.
+            Each line is its own block-level mask so wrapping is line-based
+            and there are no inline-block baseline interactions to fight. */}
         <h1 className="mb-8 max-w-[18ch] font-display font-black uppercase leading-[0.88] tracking-tight text-primary text-[clamp(2rem,10vw,9rem)] sm:mb-9 sm:leading-[0.86]">
-          <span className="block overflow-hidden">
-            <span
+          <span className="block overflow-hidden pb-[0.06em]">
+            <motion.span
               className="block will-change-transform"
-              style={
-                prefersReducedMotion
-                  ? undefined
-                  : {
-                      transform: "translateY(110%)",
-                      animation: "reveal-up 1.1s cubic-bezier(0.16,1,0.3,1) 0.1s forwards",
-                    }
+              initial={
+                prefersReducedMotion ? { y: 0 } : { y: "110%" }
               }
+              animate={{ y: 0 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 1.1,
+                delay: prefersReducedMotion ? 0 : 0.1,
+                ease: EASE,
+              }}
             >
               {HERO.headlineLine1}
-            </span>
+            </motion.span>
           </span>
-          <span className="block overflow-hidden">
-            <span
+          <span className="block overflow-hidden pb-[0.06em]">
+            <motion.span
               className="block text-accent will-change-transform"
-              style={
-                prefersReducedMotion
-                  ? undefined
-                  : {
-                      transform: "translateY(110%)",
-                      animation: "reveal-up 1.1s cubic-bezier(0.16,1,0.3,1) 0.35s forwards",
-                    }
+              initial={
+                prefersReducedMotion ? { y: 0 } : { y: "110%" }
               }
+              animate={{ y: 0 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 1.1,
+                delay: prefersReducedMotion ? 0 : 0.32,
+                ease: EASE,
+              }}
             >
               {HERO.headlineLine2}
-            </span>
+            </motion.span>
           </span>
         </h1>
 

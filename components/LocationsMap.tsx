@@ -670,7 +670,7 @@ export function LocationsMap() {
     <section
       id="locations"
       aria-labelledby="locations-heading"
-      className="relative bg-base py-24 sm:py-32 lg:py-40"
+      className="relative bg-base py-16 sm:py-24 lg:py-36"
     >
       <div className="mx-auto grid max-w-[1480px] gap-12 px-6 sm:px-10 lg:grid-cols-12 lg:gap-16">
         {/* Map first on mobile, second on desktop */}

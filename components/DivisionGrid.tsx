@@ -38,71 +38,82 @@ function DivisionCard({ division, index }: { division: Division; index: number }
         prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }
       }
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.85, delay: index * 0.1, ease: EASE }}
+      className="flex h-full"
     >
       <Link
         href={division.href}
-        className="group relative block aspect-[4/5] w-full overflow-hidden bg-elevated focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base lg:aspect-[5/4]"
+        className="group relative flex w-full flex-col overflow-hidden bg-elevated focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base"
         aria-label={`${division.name}, ${division.productLines} product lines: ${division.lines.join(", ")}`}
-        data-parallax="0.18"
       >
-        <Image
-          src={division.image}
-          alt={division.imageAlt}
-          fill
-          sizes="(min-width: 1024px) 50vw, 100vw"
-          className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.09] group-focus-visible:scale-[1.09]"
-        />
-
-        {/* Base gradient. Anchors text legibility; deepens on hover so the
-            revealed product list reads cleanly even over busy photography. */}
+        {/* Image area. Owns its own aspect ratio so the card is reliably
+            tall enough on every screen. The previous "image fills card with
+            text overlay at bottom" pattern collapsed on short mobile
+            aspect ratios: when the bottom slot's product list grew past
+            the card's mobile height, the eyebrow row and the first product
+            line ended up sitting on top of each other. Splitting the card
+            into image-on-top + text-flowing-below makes overlap
+            structurally impossible. */}
         <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-base via-base/65 to-base/20 transition-[background] duration-700 group-hover:from-base group-hover:via-base/85 group-focus-visible:from-base group-focus-visible:via-base/85"
-        />
+          className="relative aspect-[4/3] w-full overflow-hidden"
+          data-parallax="0.18"
+        >
+          <Image
+            src={division.image}
+            alt={division.imageAlt}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.09] group-focus-visible:scale-[1.09]"
+          />
 
-        {/* Top scrim. The bottom-up gradient above leaves the top of the
-            image too bright for mono eyebrow text to land cleanly when the
-            photography contains drum, sky, or stockpile contrast (the
-            CONCRETE / Y LINES legibility bug from the design review). This
-            short top-down fade darkens just the upper ~28% so the index
-            and line-count chips sit on a guaranteed-legible band without
-            tinting the image's hero subject. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-[28%] bg-gradient-to-b from-base/85 via-base/45 to-transparent"
-        />
+          {/* Top scrim so the eyebrow chips always have guaranteed dark
+              behind them, regardless of the photo's local contrast. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[55%] bg-gradient-to-b from-base/85 via-base/45 to-transparent"
+          />
 
-        {/* Yellow wash that warms the image on hover. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-accent/0 mix-blend-overlay transition-colors duration-700 group-hover:bg-accent/12 group-focus-visible:bg-accent/12"
-        />
+          {/* Bottom scrim. Bleeds the image into the elevated text panel
+              below so there's no hard seam at the boundary. Color matches
+              the panel's bg-elevated (#1a1a1c). */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[40%]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to top, rgb(26 26 28) 0%, rgba(26 26 28 / 0) 100%)",
+            }}
+          />
 
-        <CornerBracket position="tl" />
-        <CornerBracket position="tr" />
-        <CornerBracket position="bl" />
-        <CornerBracket position="br" />
+          {/* Yellow wash that warms the image on hover. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-accent/0 mix-blend-overlay transition-colors duration-700 group-hover:bg-accent/12 group-focus-visible:bg-accent/12"
+          />
 
-        {/* Top row: index + line count. */}
-        <div className="absolute inset-x-6 top-6 flex items-center justify-between font-mono text-[0.68rem] uppercase tracking-[0.22em] text-primary/75 sm:inset-x-8 sm:top-8">
-          <span>0{index + 1} / Capability</span>
-          <span className="inline-flex items-center gap-2 text-accent">
-            <span className="block size-1 bg-accent" />
-            {division.productLines} lines
-          </span>
+          <CornerBracket position="tl" />
+          <CornerBracket position="tr" />
+          <CornerBracket position="bl" />
+          <CornerBracket position="br" />
+
+          {/* Eyebrow row pinned to the top of the image. */}
+          <div className="absolute inset-x-5 top-5 flex items-center justify-between font-mono text-[0.66rem] uppercase tracking-[0.22em] text-primary/85 sm:inset-x-6 sm:top-6 sm:text-[0.68rem]">
+            <span>0{index + 1} / Capability</span>
+            <span className="inline-flex items-center gap-2 text-accent">
+              <span className="block size-1 bg-accent" />
+              {division.productLines} lines
+            </span>
+          </div>
         </div>
 
-        {/* Bottom content slot.
-            Title is always visible. The product line list lives directly
-            beneath it: dimmed and tight on idle, brightened and looser on
-            hover/focus so a specifier's eye is rewarded for paying
-            attention. On touch devices (no hover), the list is always
-            legible by default; the brightening is purely additive on
-            pointer-capable devices. */}
-        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 sm:gap-5 sm:p-8">
-          <h3 className="font-display text-[clamp(2rem,3.4vw,3.4rem)] font-black uppercase leading-[0.92] tracking-tight text-primary">
+        {/* Text content. Flows naturally below the image with no absolute
+            positioning, so it cannot overlap the eyebrow no matter how
+            long the product line list grows or how narrow the viewport.
+            On the lg breakpoint we constrain the gap so the four cards
+            in the 2x2 grid stay visually balanced. */}
+        <div className="flex flex-1 flex-col gap-4 bg-elevated p-6 sm:gap-5 sm:p-8">
+          <h3 className="font-display text-[clamp(1.75rem,3.4vw,3rem)] font-black uppercase leading-[0.95] tracking-tight text-primary">
             {division.name}
           </h3>
 
@@ -129,8 +140,9 @@ function DivisionCard({ division, index }: { division: Division; index: number }
             ))}
           </ul>
 
-          {/* CTA bar. */}
-          <div className="flex items-end justify-between gap-4 border-t border-primary/15 pt-4">
+          {/* CTA bar. mt-auto pushes it to the bottom so cards in the
+              same grid row keep their CTAs vertically aligned. */}
+          <div className="mt-auto flex items-end justify-between gap-4 border-t border-primary/15 pt-4">
             <span className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-muted">
               Open full catalog
             </span>
@@ -153,7 +165,7 @@ export function DivisionGrid() {
     <section
       id="capabilities"
       aria-labelledby="capabilities-heading"
-      className="relative bg-base py-24 sm:py-32 lg:py-40"
+      className="relative bg-base py-16 sm:py-24 lg:py-36"
     >
       <div className="mx-auto max-w-[1480px] px-6 sm:px-10">
         <div className="mb-14 grid gap-10 lg:mb-20 lg:grid-cols-12 lg:items-end">

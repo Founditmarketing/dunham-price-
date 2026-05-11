@@ -41,14 +41,21 @@ export function DivisionMarquee() {
       data-motion="marquee"
       className="relative overflow-hidden border-y border-line bg-elevated py-7 sm:py-9"
     >
-      {/* Edge fade masks so items emerge / dissolve at the viewport edges */}
+      {/* Edge fade masks so items emerge and dissolve at the viewport
+          edges. Widened from w-24 → w-32 on mobile so a yard label that
+          happens to be cut at the screen edge during the marquee's
+          continuous scroll fades out gracefully, instead of looking like
+          a hard horizontal-overflow clip (the perceived bug from the
+          design review). The track itself is contained by the section's
+          overflow-hidden + html/body overflow-x: clip; this fade is
+          purely a visual treatment so the cut never reads as broken. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-elevated to-transparent sm:w-40"
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-elevated via-elevated/80 to-transparent sm:w-48"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-elevated to-transparent sm:w-40"
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-elevated via-elevated/80 to-transparent sm:w-48"
       />
 
       <ul

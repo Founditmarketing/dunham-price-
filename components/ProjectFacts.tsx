@@ -43,7 +43,7 @@ export function ProjectFacts({ project }: ProjectFactsProps) {
   return (
     <section
       aria-labelledby="facts-heading"
-      className="relative bg-base py-24 text-primary sm:py-32"
+      className="relative bg-base py-16 text-primary sm:py-24"
     >
       <div className="mx-auto max-w-[1480px] px-6 sm:px-10">
         <div className="mb-10 grid gap-6 lg:mb-14 lg:grid-cols-12 lg:items-end lg:gap-12">

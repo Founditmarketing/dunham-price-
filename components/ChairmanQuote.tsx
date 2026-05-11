@@ -13,7 +13,7 @@ export function ChairmanQuote() {
     <section
       id="chairman"
       aria-labelledby="chairman-heading"
-      className="relative overflow-hidden bg-base py-28 sm:py-36 lg:py-44"
+      className="relative overflow-hidden bg-base py-20 sm:py-28 lg:py-40"
     >
       {/* Subtle grain — tactile depth on dark concrete-ish surface */}
       <span aria-hidden="true" className="grain" />

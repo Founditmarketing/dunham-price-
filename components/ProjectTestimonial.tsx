@@ -20,7 +20,7 @@ export function ProjectTestimonial({ testimonial }: ProjectTestimonialProps) {
   return (
     <section
       aria-labelledby="testimonial-heading"
-      className="relative overflow-hidden bg-base py-28 text-primary sm:py-36 lg:py-44"
+      className="relative overflow-hidden bg-base py-20 text-primary sm:py-28 lg:py-40"
     >
       {/* Quiet background mark — open quote glyph in display weight */}
       <span

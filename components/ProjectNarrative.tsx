@@ -20,7 +20,7 @@ export function ProjectNarrative({ project }: ProjectNarrativeProps) {
   return (
     <section
       aria-labelledby="narrative-heading"
-      className="relative bg-cream py-24 text-ink sm:py-32 lg:py-40"
+      className="relative bg-cream py-16 text-ink sm:py-24 lg:py-36"
     >
       <h2 id="narrative-heading" className="sr-only">
         Project narrative
