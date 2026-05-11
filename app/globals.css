@@ -130,6 +130,43 @@
     line-height: 1;
   }
 
+  /* Spec selector slump slider.
+     Native <input type="range"> styled to read as part of the industrial
+     spec aesthetic: hairline track painted by the component, square
+     yellow thumb instead of the OS-default rounded one. The thumb is
+     intentionally bigger than 16px so it clears the WCAG 2.5.5 minimum
+     touch target with room to spare. */
+  .spec-slump-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--color-accent);
+    border: 2px solid var(--color-base);
+    cursor: grab;
+  }
+  .spec-slump-range::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    background: var(--color-accent-hot);
+  }
+  .spec-slump-range::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: var(--color-accent);
+    border: 2px solid var(--color-base);
+    cursor: grab;
+  }
+  .spec-slump-range::-moz-range-thumb:active {
+    cursor: grabbing;
+    background: var(--color-accent-hot);
+  }
+  .spec-slump-range::-webkit-slider-runnable-track {
+    background: transparent;
+  }
+  .spec-slump-range::-moz-range-track {
+    background: transparent;
+  }
+
   /* Humanist serif register for narrative passages.
      Site-wide body is Inter; using it for everything from product specs
      to project storytelling makes the page read as one register and the

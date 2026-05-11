@@ -115,11 +115,26 @@ export function ConcreteCalculator() {
               Calculate your pour.
             </h2>
           </div>
-          <p className="max-w-[44ch] text-base leading-relaxed text-primary/85 sm:text-lg lg:col-span-5">
-            Live volume estimate in cubic yards, cubic meters, and 60&nbsp;lb
-            bags. Round up roughly 5 – 10% for waste, then send the spec to
-            dispatch.
-          </p>
+          <div className="flex flex-col gap-5 lg:col-span-5">
+            <p className="max-w-[44ch] text-base leading-relaxed text-primary/85 sm:text-lg">
+              Live volume estimate in cubic yards, cubic meters, and 60&nbsp;lb
+              bags. Round up roughly 5 – 10% for waste, then send the spec to
+              dispatch.
+            </p>
+            {/* Cross-link to the spec selector. The calculator answers
+                "how much?"; the spec selector answers "what mix?" — the
+                two questions every quote needs both halves of. */}
+            <Link
+              href="/spec"
+              className="group -mx-3 inline-flex w-fit items-center gap-3 px-3 py-2 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-accent transition hover:text-accent-hot"
+            >
+              Need to find the right mix? Open the spec selector
+              <ArrowRight
+                aria-hidden
+                className="size-3.5 transition-transform duration-500 group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
         </div>
 
         {/* Calculator surface */}

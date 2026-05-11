@@ -25,9 +25,10 @@ export const SITE = {
 
 export const NAV_LINKS: NavLinkItem[] = [
   { label: "Capabilities", href: "/capabilities" },
+  { label: "Spec", href: "/spec" },
   { label: "Projects", href: "/#projects" },
-  { label: "About", href: "/#chairman" },
   { label: "Locations", href: "/#locations" },
+  { label: "About", href: "/#chairman" },
   { label: "Careers", href: "/careers" },
 ];
 
