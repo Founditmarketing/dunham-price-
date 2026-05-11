@@ -34,21 +34,37 @@ export function Hero() {
   const videoAllowed = useVideoAllowed();
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  // True if the browser rejected autoplay (Safari low-power, strict
+  // autoplay policy, etc). Surfaces the Play overlay so the user can
+  // start the video themselves rather than seeing a frozen poster.
+  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
+
   // Pause the video when scrolled offscreen so it stops costing bandwidth.
+  // Catch on first play() so a rejected autoplay surfaces the Play overlay.
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry) return;
-        if (entry.isIntersecting) void el.play().catch(() => {});
-        else el.pause();
+        if (entry.isIntersecting) {
+          el.play().catch(() => setAutoplayBlocked(true));
+        } else {
+          el.pause();
+        }
       },
       { threshold: 0.05 },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
+
+  const playManually = () => {
+    videoRef.current
+      ?.play()
+      .then(() => setAutoplayBlocked(false))
+      .catch(() => {});
+  };
 
   return (
     <section
@@ -78,6 +94,7 @@ export function Hero() {
               playsInline
               preload="metadata"
               aria-hidden="true"
+              onPlay={() => setAutoplayBlocked(false)}
             />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
@@ -99,6 +116,20 @@ export function Hero() {
 
       {/* Subtle grain — concrete is a textile material */}
       <span aria-hidden="true" className="grain" />
+
+      {/* Autoplay fallback — only renders when video was allowed but the
+          browser rejected the play() promise. Centered so it's the obvious
+          recovery action; sized large enough to tap on a phone. */}
+      {videoAllowed && autoplayBlocked && (
+        <button
+          type="button"
+          onClick={playManually}
+          aria-label="Play hero video"
+          className="absolute left-1/2 top-1/2 z-[5] inline-flex size-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-accent bg-base/60 text-accent backdrop-blur-md transition hover:bg-accent hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base"
+        >
+          <Play className="size-7" aria-hidden />
+        </button>
+      )}
 
       {/* Top-left frame markers — small editorial detail */}
       <div

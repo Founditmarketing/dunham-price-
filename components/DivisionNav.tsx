@@ -69,18 +69,16 @@ export function DivisionNav() {
       e.preventDefault();
       const target = document.getElementById(slug);
       if (!target) return;
-      const offset =
-        parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue("--nav-h"),
-        ) *
-          16 +
-        parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--div-nav-h",
-          ),
-        ) *
-          16 +
-        12;
+      // Read sticky-offset CSS variables, with NaN guards so a missing /
+      // empty / pre-CSS variable can't poison the calculation. If
+      // parseFloat returns NaN, the click previously scrolled to top: NaN
+      // → no-op, making the tab feel unresponsive.
+      const styles = getComputedStyle(document.documentElement);
+      const navHRem = parseFloat(styles.getPropertyValue("--nav-h"));
+      const divHRem = parseFloat(styles.getPropertyValue("--div-nav-h"));
+      const navH = Number.isFinite(navHRem) ? navHRem * 16 : 80;
+      const divH = Number.isFinite(divHRem) ? divHRem * 16 : 88;
+      const offset = navH + divH + 12;
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: "smooth" });
       setActive(slug);

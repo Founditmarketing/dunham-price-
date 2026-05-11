@@ -107,9 +107,12 @@ export function ScrollChoreography() {
         }
       });
 
+      // Cleanup is scoped via gsap.context — only the triggers we created
+      // get reverted. We deliberately do NOT call ScrollTrigger.killAll(),
+      // which would also nuke triggers from MixerMark and any other
+      // component that uses ScrollTrigger independently.
       cleanup = () => {
         ctx.revert();
-        ScrollTrigger.killAll();
       };
     })();
 

@@ -297,9 +297,13 @@ function NumberField({
 }: NumberFieldProps) {
   const id = useId();
   const handle = (e: ChangeEvent<HTMLInputElement>) => {
-    // Allow digits, single decimal point, empty string. Strip everything else.
-    const raw = e.target.value;
-    if (/^[0-9]*\.?[0-9]*$/.test(raw)) onChange(raw);
+    // Sanitize input rather than silently reject. Pasting "12 ft" → "12",
+    // "1,200" → "1200", "abc12.5xyz" → "12.5". Collapses any second decimal
+    // point so the value stays parseable as a finite float.
+    const cleaned = e.target.value
+      .replace(/[^0-9.]/g, "")
+      .replace(/(\..*)\./g, "$1");
+    onChange(cleaned);
   };
   return (
     <div className="flex flex-col">

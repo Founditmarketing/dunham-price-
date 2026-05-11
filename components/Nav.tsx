@@ -47,7 +47,9 @@ export function Nav() {
             aria-label={`${SITE.name} home`}
             className="relative z-10 -my-2 inline-flex items-center py-2"
           >
-            <Logo />
+            {/* h=44 fits the h-16 mobile nav (64px) cleanly with breathing room
+                above and below; the lockup itself is ~78px wide at this height. */}
+            <Logo height={44} priority />
           </Link>
 
           <nav

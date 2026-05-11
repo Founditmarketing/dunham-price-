@@ -21,7 +21,7 @@ export function Footer() {
 
       <div className="mx-auto grid max-w-[1480px] gap-12 px-6 py-16 sm:px-10 sm:py-20 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-4">
-          <Logo />
+          <Logo height={72} />
           <p className="mt-6 max-w-[34ch] text-sm leading-relaxed text-primary/70">
             Serving {SITE.region} since {SITE.founded}. Concrete, precast, and
             aggregates engineered for the Gulf Coast.
