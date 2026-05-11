@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { LocationsMap } from "@/components/LocationsMap";
 import { Nav } from "@/components/Nav";
+import { OperationalTicker } from "@/components/OperationalTicker";
 import { PourStat } from "@/components/PourStat";
 import { ProjectsStrip } from "@/components/ProjectsStrip";
 import { QuoteCTA } from "@/components/QuoteCTA";
@@ -58,6 +59,16 @@ export default function HomePage() {
 
         <DivisionMarquee />
         <ProjectsStrip />
+
+        {/* Operational snapshot.
+            Bridges the work shown above (case studies) with the geography
+            shown below (yards on the map). The buyer's mental model goes
+            "here's what they've built → here's how the system runs today
+            → here's where the four yards are," which lines up with how a
+            specifier evaluates a vendor: capability, then operational
+            posture, then proximity. */}
+        <OperationalTicker />
+
         <LocationsMap />
         <Certifications />
         <QuoteCTA />
