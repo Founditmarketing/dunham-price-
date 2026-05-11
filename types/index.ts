@@ -95,3 +95,25 @@ export interface Certification {
   abbr: string;
   full: string;
 }
+
+export type TimelineCategory =
+  | "founding"
+  | "leadership"
+  | "division"
+  | "project"
+  | "expansion";
+
+export interface TimelineMilestone {
+  year: number;
+  /** Short editorial title rendered in display weight. */
+  title: string;
+  /** One- or two-sentence description. */
+  description: string;
+  category: TimelineCategory;
+  /**
+   * True when the year or story details are best-guess and should be
+   * verified by the Price family before launch. Renders a small mono
+   * "to confirm" tag on the card so reviewers don't mistake it for fact.
+   */
+  toConfirm?: boolean;
+}

@@ -10,6 +10,7 @@ import type {
   NavLinkItem,
   Project,
   Stat,
+  TimelineMilestone,
 } from "@/types";
 
 export const SITE = {
@@ -243,6 +244,101 @@ export const CERTIFICATIONS: Certification[] = [
   { abbr: "CAAL", full: "Concrete & Aggregates Association of Louisiana" },
   { abbr: "AGC", full: "Associated General Contractors" },
   { abbr: "ABC", full: "Associated Builders & Contractors" },
+];
+
+/**
+ * Heritage timeline rendered in the Timeline component on the homepage.
+ *
+ * Verified entries (no `toConfirm`):
+ *   - 1939: founding (chairman quote names Rowland Price as the founder)
+ *   - 2023: Port of Lake Charles 12,000 yd³ pour (lib/projects.ts)
+ *   - 2024: I-10 Calcasieu River Bridge precast delivery (lib/projects.ts)
+ *
+ * Speculative entries are flagged `toConfirm: true` so the renderer
+ * surfaces a mono "to confirm" tag and the family can review/correct
+ * before launch. Years and details for the leadership transitions are
+ * decade-anchored guesses that line up with the existing four-generation
+ * rail; replace with verified history when available.
+ *
+ * Order: chronological. Timeline component preserves this order.
+ */
+export const TIMELINE: TimelineMilestone[] = [
+  {
+    year: 1939,
+    title: "Rowland Price batches the first load.",
+    description:
+      "Founded in Westlake to serve the post-war Calcasieu industrial corridor. One drum, one truck, one pour at a time.",
+    category: "founding",
+  },
+  {
+    year: 1962,
+    title: "Aggregates operation formalized.",
+    description:
+      "Crushed limestone, washed sand, and rip rap added to the catalog as Southwest Louisiana road and drainage work scales up.",
+    category: "division",
+    toConfirm: true,
+  },
+  {
+    year: 1965,
+    title: "Rob Price, Sr. takes the helm.",
+    description:
+      "Second generation steps into leadership, expanding the ready-mix fleet and standardizing batch QC across plants.",
+    category: "leadership",
+    toConfirm: true,
+  },
+  {
+    year: 1978,
+    title: "DP Concrete Products opens.",
+    description:
+      "Precast yard launched to fabricate prestressed pile, bridge girders, and custom precast for Louisiana DOTD infrastructure work.",
+    category: "division",
+    toConfirm: true,
+  },
+  {
+    year: 1989,
+    title: "Rob Price, Jr. assumes leadership.",
+    description:
+      "Third generation extends the company's footprint with new yards in Lake Charles and Sulphur, anchoring the four-yard dispatch network.",
+    category: "leadership",
+    toConfirm: true,
+  },
+  {
+    year: 2003,
+    title: "South Coast Materials joins the group.",
+    description:
+      "Specialty washed sand division added, serving the Gulf Coast contractor base for concrete batching and asphalt mix.",
+    category: "expansion",
+    toConfirm: true,
+  },
+  {
+    year: 2014,
+    title: "Fourth generation joins the company.",
+    description:
+      "Same family. Same yard. The standard Rowland set in 1939 carried forward into the fourth generation of Price leadership.",
+    category: "leadership",
+    toConfirm: true,
+  },
+  {
+    year: 2022,
+    title: "Cameron LNG shoreline protection.",
+    description:
+      "180,000 tons of base material and three rip rap gradations delivered for 1.2 miles of coastal erosion protection on a NOAA-tied JIT schedule.",
+    category: "project",
+  },
+  {
+    year: 2023,
+    title: "Port of Lake Charles, 36-hour pour.",
+    description:
+      "12,000 yd³ structural concrete delivered in a continuous pour. All four plants in lockstep, two batch supervisors radio-linked, zero cold joints.",
+    category: "project",
+  },
+  {
+    year: 2024,
+    title: "I-10 Calcasieu River Bridge precast.",
+    description:
+      "AASHTO Type III & IV girders and 96 deck panels fabricated in-state at DP Concrete Products. Plant-to-pour averaged 22 minutes.",
+    category: "project",
+  },
 ];
 
 export const CHAIRMAN = {
