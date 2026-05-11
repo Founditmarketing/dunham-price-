@@ -2,16 +2,34 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, Clock, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Clock, MapPin, Navigation, Phone } from "lucide-react";
 
-import { LOCATIONS } from "@/lib/content";
+import { LOCATIONS, SITE } from "@/lib/content";
 import type { LocationItem } from "@/types";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Build a Google Maps deep link from address parts. Works on both iOS and Android. */
-function mapsHref(l: LocationItem): string {
-  const q = encodeURIComponent(`${l.address}, ${l.city}, ${l.state}`);
+/**
+ * Google Maps directions URL. Routes the buyer's current location → yard.
+ * Both iOS and Android honor this URL scheme: iOS opens the Google Maps
+ * app if installed, otherwise the maps.google.com browser fallback;
+ * Android picks the user's default maps app.
+ */
+function mapsDirectionsHref(l: LocationItem): string {
+  const dest = encodeURIComponent(
+    `${l.address}, ${l.city}, ${l.state}`,
+  );
+  // Including the geo coords as the destination's `destination_place_id`
+  // alternative (lat,lng) gives Maps a precise pin even if the address
+  // geocodes to the wrong block. The `destination` is the human-readable
+  // address; both can be present.
+  const ll = `${l.coords[1]},${l.coords[0]}`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${dest}&destination_place_id=&travelmode=driving&dir_action=navigate&query=${ll}`;
+}
+
+/** All four yards as a single Google Maps search. Returns a result list. */
+function mapsAllYardsHref(): string {
+  const q = encodeURIComponent(`${SITE.name} ${SITE.region}`);
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
 }
 
@@ -549,7 +567,7 @@ function IllustratedMap({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: EASE }}
-          className="absolute left-3 top-3 max-w-[14rem] border border-accent/70 bg-base/92 p-3 backdrop-blur-md sm:left-6 sm:top-6 sm:max-w-[17rem] sm:p-4"
+          className="absolute left-3 top-3 flex max-w-[14rem] flex-col border border-accent/70 bg-base/92 p-3 backdrop-blur-md sm:left-6 sm:top-6 sm:max-w-[17rem] sm:p-4"
           role="status"
           aria-live="polite"
         >
@@ -591,11 +609,52 @@ function IllustratedMap({
               </div>
             )}
           </dl>
+
+          {/* Primary directions CTA. Path 1 polish from the map design
+              review: the previous popover surfaced phone/hours but made
+              the highest-intent action (navigate to the yard) only
+              implicitly accessible. Now it's the dominant affordance at
+              the bottom of the popover, sized as a real tap target. */}
+          <a
+            href={mapsDirectionsHref(active)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Get driving directions to the ${active.city} yard`}
+            className="group mt-4 inline-flex min-h-[40px] items-center justify-between gap-3 bg-accent px-3 py-2 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-ink transition-colors hover:bg-accent-hot focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base"
+          >
+            <span className="inline-flex items-center gap-2">
+              <Navigation aria-hidden className="size-3.5" />
+              Get directions
+            </span>
+            <ArrowUpRight
+              aria-hidden
+              className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </a>
         </motion.div>
       )}
 
-      {/* Bottom-right legend caption */}
-      <div className="absolute bottom-3 left-3 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted/80 sm:bottom-4 sm:left-4">
+      {/* Floating directions chip — bottom-right of the map.
+          Always visible when a yard is active so the navigate intent has a
+          tappable affordance even if the popover is scrolled out of view
+          on a small phone (the popover lives top-left; this chip lives
+          bottom-right). Mirrors the popover CTA so they reinforce each
+          other instead of competing. */}
+      {active && (
+        <a
+          href={mapsDirectionsHref(active)}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open directions to the ${active.city} yard in Maps`}
+          className="absolute bottom-3 right-3 inline-flex min-h-[36px] items-center gap-2 border border-accent/70 bg-base/92 px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-primary backdrop-blur-md transition-colors hover:border-accent hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:bottom-5 sm:right-5"
+        >
+          <Navigation aria-hidden className="size-3 text-accent" />
+          {active.city} → Maps
+        </a>
+      )}
+
+      {/* Bottom-left legend caption */}
+      <div className="absolute bottom-3 left-3 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted/80 sm:bottom-5 sm:left-5">
         Drive-time rings · 5 / 15 / 25 mi
       </div>
     </div>
@@ -673,14 +732,18 @@ function LocationRow({
               <Phone className="size-4" aria-hidden />
             </a>
           )}
+          {/* Directions handoff. Was a search URL (mapsHref) before; the
+              aria-label always read "Get directions" but the URL opened a
+              search result instead. Now wired to the proper directions
+              endpoint so the tap intent matches the destination. */}
           <a
-            href={mapsHref(location)}
+            href={mapsDirectionsHref(location)}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Get directions to ${location.city} yard`}
+            aria-label={`Get driving directions to ${location.city} yard`}
             className="inline-flex size-11 items-center justify-center text-primary/75 transition hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
-            <ArrowUpRight className="size-4" aria-hidden />
+            <Navigation className="size-4" aria-hidden />
           </a>
         </div>
       </div>
@@ -701,13 +764,34 @@ export function LocationsMap() {
         {/* Map first on mobile, second on desktop */}
         <div className="order-1 lg:order-2 lg:col-span-7">
           <IllustratedMap activeId={activeId} onActivate={setActiveId} />
-          <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted">
-            <span>Calcasieu Parish · Beauregard ↑</span>
-            <span aria-hidden className="text-primary/25">
-              /
-            </span>
-            <span>Tap a yard for dispatch &amp; hours</span>
-          </p>
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-x-5 gap-y-2">
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted">
+              <span>Calcasieu Parish · Beauregard ↑</span>
+              <span aria-hidden className="text-primary/25">
+                /
+              </span>
+              <span>Tap a yard for dispatch &amp; hours</span>
+            </p>
+            {/* External handoff: a buyer who wants real geography (search,
+                pan/zoom, satellite, real-time traffic) can open all four
+                yards in their preferred maps app. Keeps the brand-defining
+                illustrated map as the on-page experience while making the
+                "I actually need to navigate" path obvious. */}
+            <a
+              href={mapsAllYardsHref()}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open all four yards in Google Maps"
+              className="group -mx-2 inline-flex min-h-[36px] items-center gap-2 px-2 py-1 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-accent transition hover:text-accent-hot"
+            >
+              <Navigation aria-hidden className="size-3" />
+              View all four yards in Maps
+              <ArrowUpRight
+                aria-hidden
+                className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </a>
+          </div>
         </div>
 
         <div className="order-2 lg:order-1 lg:col-span-5">
