@@ -35,15 +35,32 @@ export function MobileBottomBar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Hide when the page's #quote section is on screen — avoids redundancy.
+  // Hide when EITHER the page's #quote section OR the footer is on screen.
+  //   - #quote: never duplicate the same conversion ask in two places.
+  //   - footer: keep the bottom of the page reachable; otherwise the bar
+  //     permanently obscures the last ~80px of the footer.
   useEffect(() => {
-    const el = document.getElementById("quote");
-    if (!el) return;
+    const targets: HTMLElement[] = [];
+    const quote = document.getElementById("quote");
+    if (quote) targets.push(quote);
+    const footer = document.querySelector("footer");
+    if (footer instanceof HTMLElement) targets.push(footer);
+    if (targets.length === 0) return;
+
+    // A single observer + Set tracks "is any of them currently visible?"
+    // so we hide the bar whenever the user is in either danger zone.
+    const seen = new Set<Element>();
     const io = new IntersectionObserver(
-      ([entry]) => setQuoteVisible(entry?.isIntersecting ?? false),
-      { threshold: 0.2 },
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) seen.add(e.target);
+          else seen.delete(e.target);
+        }
+        setQuoteVisible(seen.size > 0);
+      },
+      { threshold: 0.15 },
     );
-    io.observe(el);
+    targets.forEach((t) => io.observe(t));
     return () => io.disconnect();
   }, []);
 
@@ -65,25 +82,37 @@ export function MobileBottomBar() {
           style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
           data-print-hide
         >
-          <div className="grid grid-cols-2">
+          {/* Two-column conversion bar.
+              Sized as a 1fr / 1.4fr grid so the yellow CTA gets the bigger
+              share of the bar (matches its visual hierarchy) without
+              squeezing the phone tap target below 44px. The phone column
+              drops the redundant "CALL" prefix because the icon already
+              sells the affordance — leaving just the number prevented the
+              previous overflow that clipped the leading "C" on 360–390px
+              viewports. Both columns honor whitespace-nowrap and shrink
+              their tracking so the worst-case Pixel-5 width still clears. */}
+          <div className="grid h-16 grid-cols-[1fr_1.4fr] items-stretch">
             <a
               href={SITE.phoneTel}
-              className="group flex h-16 items-center justify-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-primary transition-colors hover:text-accent active:bg-elevated"
+              aria-label={`Call dispatch ${SITE.phone}`}
+              className="group flex items-center justify-center gap-2.5 px-3 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-primary transition-colors hover:text-accent active:bg-elevated"
             >
               <Phone
                 aria-hidden
-                className="size-4 text-accent transition-transform duration-300 group-hover:-translate-y-0.5"
+                className="size-4 shrink-0 text-accent transition-transform duration-300 group-hover:-translate-y-0.5"
               />
-              <span className="whitespace-nowrap">Call {SITE.phone}</span>
+              <span className="tabular-nums whitespace-nowrap">
+                {SITE.phone}
+              </span>
             </a>
             <Link
               href="/#quote"
-              className="group flex h-16 items-center justify-center gap-3 bg-accent font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink transition-colors hover:bg-accent-hot active:bg-accent-hot"
+              className="group flex items-center justify-center gap-2.5 bg-accent px-3 font-mono text-[0.72rem] uppercase tracking-[0.16em] text-ink transition-colors hover:bg-accent-hot active:bg-accent-hot"
             >
               <span className="whitespace-nowrap">Request a Quote</span>
               <ArrowRight
                 aria-hidden
-                className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5"
               />
             </Link>
           </div>

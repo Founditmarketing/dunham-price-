@@ -56,7 +56,19 @@
   html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    scroll-behavior: smooth;
+    /* No global scroll-behavior: smooth.
+       It fights manual scroll input during programmatic scrollTo and
+       creates a "stuck" feeling on long anchor jumps. Components that
+       want smooth scroll pass `behavior: 'smooth'` to scrollTo()
+       explicitly (Nav anchor links, DivisionNav scroll-spy, MobileBottomBar). */
+
+    /* Defensive horizontal-overflow clamp. The marquee, hero ornaments, and
+       any future bleed-edge graphic can independently overflow their own
+       boxes without ever causing the page itself to scroll horizontally on
+       mobile (the visible scrollbar bug from the design review). `clip` is
+       preferred over `hidden` because it doesn't establish a containing
+       block and therefore doesn't break position: sticky descendants. */
+    overflow-x: clip;
   }
 
   body {
@@ -64,6 +76,7 @@
     color: var(--color-primary);
     font-family: var(--font-body);
     font-feature-settings: "ss01", "cv11";
+    overflow-x: clip;
   }
 
   ::selection {

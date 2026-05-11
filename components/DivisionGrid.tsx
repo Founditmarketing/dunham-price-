@@ -62,6 +62,18 @@ function DivisionCard({ division, index }: { division: Division; index: number }
           className="absolute inset-0 bg-gradient-to-t from-base via-base/65 to-base/20 transition-[background] duration-700 group-hover:from-base group-hover:via-base/85 group-focus-visible:from-base group-focus-visible:via-base/85"
         />
 
+        {/* Top scrim. The bottom-up gradient above leaves the top of the
+            image too bright for mono eyebrow text to land cleanly when the
+            photography contains drum, sky, or stockpile contrast (the
+            CONCRETE / Y LINES legibility bug from the design review). This
+            short top-down fade darkens just the upper ~28% so the index
+            and line-count chips sit on a guaranteed-legible band without
+            tinting the image's hero subject. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[28%] bg-gradient-to-b from-base/85 via-base/45 to-transparent"
+        />
+
         {/* Yellow wash that warms the image on hover. */}
         <div
           aria-hidden="true"
